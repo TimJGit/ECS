@@ -1,5 +1,4 @@
 *.sdf
 *.vcxproj
-*.vcxproj.filters
 *.vcxproj.user
 Debug/*

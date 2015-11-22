@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main\main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="RootSystem\RootSystem.cpp">
+      <Filter>RootSytem</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers\Vector3.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Entity.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\PositionComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Pool\Pool.cpp">
+      <Filter>Pool</Filter>
+    </ClCompile>
+    <ClCompile Include="Group\Group.cpp">
+      <Filter>Group</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RootSystem\RootSystem.h">
+      <Filter>RootSytem</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IComponent.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\ISystem.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\stdafx.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IObserver.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Exceptions.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Vector3.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ComponentIDs.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PositionComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Entity.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Pool\Pool.h">
+      <Filter>Pool</Filter>
+    </ClInclude>
+    <ClInclude Include="Group\Group.h">
+      <Filter>Group</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{db649f28-cd4f-47fb-ad51-acbb6db5439d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RootSytem">
+      <UniqueIdentifier>{b3d53a7d-0f02-43c0-9a17-1734b531895f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{b546c1e8-faef-49a4-a19d-5ad5280b5bac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{06c0db90-636d-4369-a9e5-a63dd0c395bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{8231dece-645b-444a-8443-0810ac029159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{da9cb11d-7983-4be2-87df-348af0041039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pool">
+      <UniqueIdentifier>{64f93ff4-cfbb-4844-bbea-96f41c9641e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Group">
+      <UniqueIdentifier>{5ade8466-02a3-49ee-9c33-40becfe13f72}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
