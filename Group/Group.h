@@ -8,16 +8,14 @@ class Group
 public:
 	virtual ~Group();
 
-	void SetComponentIDs(const vector<ComponentID>& componentIDs);
-	const vector<ComponentID>& GetComponentIDs() const;
-
-	bool CompareComponentIDs(vector<ComponentID>& componentIDs) const;
-
 private:
 	Group();
 
 	vector<ComponentID> m_ComponentIDs;
 	unordered_set<Entity*> m_pEntities;
+
+	void SetComponentIDs(const vector<ComponentID>& componentIDs);
+	bool CompareComponentIDs(vector<ComponentID>& componentIDs) const;
 
 	friend class Pool;
 

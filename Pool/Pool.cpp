@@ -31,7 +31,7 @@ const Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 			return *pGroup;
 		}
 	}
-
+	
 	Group* pGroup = new Group();
 	pGroup->SetComponentIDs(componentIDs);
 	m_pGroups.insert(pGroup);
