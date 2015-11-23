@@ -1,9 +1,11 @@
 #include "RootSystem.h"
 
-RootSystem& RootSystem::GetInstance()
+RootSystem::RootSystem()
 {
-	static RootSystem instance;
-	return instance;
+}
+
+RootSystem::~RootSystem()
+{
 }
 
 void RootSystem::Execute()
@@ -13,7 +15,13 @@ void RootSystem::Execute()
 	}
 }
 
-void RootSystem::AddSystem(ISystem* pNewSystem)
+RootSystem& RootSystem::GetInstance()
 {
-	m_pSystems.push_back(pNewSystem);
+	static RootSystem instance;
+	return instance;
+}
+
+void RootSystem::AddSystem(ISystem* pSystem)
+{
+	m_pSystems.push_back(pSystem);
 }

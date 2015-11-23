@@ -2,11 +2,11 @@
 
 enum ComponentID
 {
-	PositionComponent
+	Position
 };
 
-const int TOTAL_COMPONENTS = ComponentID::PositionComponent + 1;
+const int TOTAL_COMPONENTS = ComponentID::Position + 1;
 
 const char* const COMPONENT_NAMES[TOTAL_COMPONENTS] = {
-	"PositionComponent"
+	"Position"
 };

@@ -9,13 +9,14 @@ public:
 	PositionComponent(float x, float y, float z);
 	virtual ~PositionComponent();
 
+	virtual ComponentID GetComponentID() const;
+
 	const Vector3& GetPosition() const;
 	void SetPosition(const Vector3& position);
 
 private:
 	Vector3 m_Position;
 
-	//Delete default copy constructor and assignment operator
 	PositionComponent(const PositionComponent&) = delete;
 	void operator=(const PositionComponent&) = delete;
 };

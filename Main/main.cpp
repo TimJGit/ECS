@@ -1,8 +1,13 @@
 #include "../Helpers/stdafx.h"
+#include "../Pool/Pool.h"
+#include "../Group/Group.h"
+#include "../Entity/Entity.h"
+#include "../Components/PositionComponent.h"
 
 void RunTest()
 {
-
+	Pool* pPool = new Pool();
+	delete pPool;
 }
 
 int main()
@@ -16,5 +21,6 @@ int main()
 		cout << "ERROR >> " << error.what() << endl;
 	}
 
+	cin.get();
 	_CrtDumpMemoryLeaks();
 }
