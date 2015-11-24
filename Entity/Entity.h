@@ -1,6 +1,8 @@
 #pragma once
 #include "../Helpers/stdafx.h"
 
+typedef void(*EventCallBack)();
+
 enum ComponentEvent { ComponentAdded, ComponentRemoved };
 
 class Entity
@@ -18,11 +20,11 @@ private:
 
 	vector<IComponent*> m_pComponents;
 
-	vector<IObserver*> m_pOnComponentAddedObservers;
-	vector<IObserver*> m_pOnComponentRemovedObservers;
+	vector<EventCallBack> m_OnComponentAddedCallBacks;
+	vector<EventCallBack> m_OnComponentRemovedCallBacks;
 
-	void SubscribeToEvent(ComponentEvent componentEvent, IObserver* pObserver);
-	void UnSubscribeFromEvent(ComponentEvent componentEvent, IObserver* pObserver);
+	void SubscribeToEvent(ComponentEvent componentEvent, EventCallBack callBack);
+	void UnsubscribeFromEvent(ComponentEvent componentEvent, EventCallBack callBack);
 
 	friend class Pool;
 

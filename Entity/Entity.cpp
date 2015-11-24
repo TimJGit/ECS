@@ -10,14 +10,6 @@ Entity::~Entity()
 	for(IComponent* pComponent : m_pComponents){
 		delete pComponent;
 	}
-
-	for(IObserver* pObserver : m_pOnComponentAddedObservers){
-		delete pObserver;
-	}
-
-	for(IObserver* pObserver : m_pOnComponentRemovedObservers){
-		delete pObserver;
-	}
 }
 
 bool Entity::HasComponent(ComponentID componentID) const
@@ -41,8 +33,8 @@ void Entity::AddComponent(IComponent* pComponent)
 
 	m_pComponents[componentID] = pComponent;
 
-	for(IObserver* pObserver : m_pOnComponentAddedObservers){
-		pObserver->EventCallback();
+	for(EventCallBack callBack : m_OnComponentAddedCallBacks){
+		callBack();
 	}
 }
 
@@ -57,8 +49,8 @@ void Entity::RemoveComponent(ComponentID componentID)
 	delete m_pComponents[componentID];
 	m_pComponents[componentID] = nullptr;
 
-	for(IObserver* pObserver : m_pOnComponentRemovedObservers){
-		pObserver->EventCallback();
+	for(EventCallBack callBack : m_OnComponentRemovedCallBacks){
+		callBack();
 	}
 }
 
@@ -73,34 +65,30 @@ IComponent* Entity::GetComponent(ComponentID componentID) const
 	return m_pComponents[componentID];
 }
 
-void Entity::SubscribeToEvent(ComponentEvent componentEvent, IObserver* pObserver)
+void Entity::SubscribeToEvent(ComponentEvent componentEvent, EventCallBack callBack)
 {
-	if(!pObserver){
-		throw NullPointerException("Entity::SubscribeToEvent >> Cannot subscribe with null pointer!");
-	}
-
 	switch(componentEvent)
 	{
 	case ComponentAdded:
-		m_pOnComponentAddedObservers.push_back(pObserver);
+		m_OnComponentAddedCallBacks.push_back(callBack);
 		break;
 
 	case ComponentRemoved:
-		m_pOnComponentRemovedObservers.push_back(pObserver);
+		m_OnComponentRemovedCallBacks.push_back(callBack);
 		break;
 	}
 }
 
-void Entity::UnSubscribeFromEvent(ComponentEvent componentEvent, IObserver* pObserver)
+void Entity::UnsubscribeFromEvent(ComponentEvent componentEvent, EventCallBack callBack)
 {
 	switch(componentEvent)
 	{
 	case ComponentAdded:
-		m_pOnComponentAddedObservers.erase(remove(m_pOnComponentAddedObservers.begin(), m_pOnComponentAddedObservers.end(), pObserver), m_pOnComponentAddedObservers.end());
+		m_OnComponentAddedCallBacks.erase(remove(m_OnComponentAddedCallBacks.begin(), m_OnComponentAddedCallBacks.end(), callBack), m_OnComponentAddedCallBacks.end());
 		break;
 
 	case ComponentRemoved:
-		m_pOnComponentRemovedObservers.erase(remove(m_pOnComponentRemovedObservers.begin(), m_pOnComponentRemovedObservers.end(), pObserver), m_pOnComponentRemovedObservers.end());
+		m_OnComponentRemovedCallBacks.erase(remove(m_OnComponentRemovedCallBacks.begin(), m_OnComponentRemovedCallBacks.end(), callBack), m_OnComponentRemovedCallBacks.end());
 		break;
 	}
 }

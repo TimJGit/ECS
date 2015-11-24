@@ -36,9 +36,6 @@
     <ClInclude Include="Helpers\stdafx.h">
       <Filter>Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces\IObserver.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Helpers\Exceptions.h">
       <Filter>Helpers</Filter>
     </ClInclude>

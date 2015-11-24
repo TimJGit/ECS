@@ -21,5 +21,4 @@ using namespace std;
 #include "Vector3.h"
 #include "../Components/ComponentIDs.h"
 #include "../Interfaces/IComponent.h"
-#include "../Interfaces/IObserver.h"
 #include "../Interfaces/ISystem.h"
