@@ -20,7 +20,10 @@ Pool::~Pool()
 Entity* Pool::CreateEntity()
 {
 	Entity* pEntity = new Entity();
+
+	pEntity->SetObserver(this);
 	m_pEntities.insert(pEntity);
+
 	return pEntity;
 }
 
@@ -33,7 +36,14 @@ const Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 	}
 	
 	Group* pGroup = new Group();
+
 	pGroup->SetComponentIDs(componentIDs);
 	m_pGroups.insert(pGroup);
+	
 	return *pGroup;
+}
+
+void Pool::Notify(void* pData)
+{
+	Entity* pEntity = static_cast<Entity*>(pData);
 }

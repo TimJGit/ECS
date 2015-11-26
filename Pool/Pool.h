@@ -4,7 +4,7 @@
 class Entity;
 class Group;
 
-class Pool
+class Pool : public INotifiable
 {
 public:
 	Pool();
@@ -12,6 +12,8 @@ public:
 
 	Entity* CreateEntity();
 	const Group& GetGroup(vector<ComponentID> componentIDs);
+
+	virtual void Notify(void* pData);
 
 private:
 	unordered_set<Entity*> m_pEntities;

@@ -1,12 +1,15 @@
 #include "Entity.h"
 
-Entity::Entity()
+Entity::Entity() :
+	m_pObserver(nullptr)
 {
 	m_pComponents.resize(TOTAL_COMPONENTS);
 }
 
 Entity::~Entity()
 {
+	delete m_pObserver;
+
 	for(IComponent* pComponent : m_pComponents){
 		delete pComponent;
 	}
@@ -33,9 +36,7 @@ void Entity::AddComponent(IComponent* pComponent)
 
 	m_pComponents[componentID] = pComponent;
 
-	for(EventCallBack callBack : m_OnComponentAddedCallBacks){
-		callBack();
-	}
+	m_pObserver->Notify(this);
 }
 
 void Entity::RemoveComponent(ComponentID componentID)
@@ -49,9 +50,7 @@ void Entity::RemoveComponent(ComponentID componentID)
 	delete m_pComponents[componentID];
 	m_pComponents[componentID] = nullptr;
 
-	for(EventCallBack callBack : m_OnComponentRemovedCallBacks){
-		callBack();
-	}
+	m_pObserver->Notify(this);
 }
 
 IComponent* Entity::GetComponent(ComponentID componentID) const
@@ -65,30 +64,7 @@ IComponent* Entity::GetComponent(ComponentID componentID) const
 	return m_pComponents[componentID];
 }
 
-void Entity::SubscribeToEvent(ComponentEvent componentEvent, EventCallBack callBack)
+void Entity::SetObserver(INotifiable* pObserver)
 {
-	switch(componentEvent)
-	{
-	case ComponentAdded:
-		m_OnComponentAddedCallBacks.push_back(callBack);
-		break;
-
-	case ComponentRemoved:
-		m_OnComponentRemovedCallBacks.push_back(callBack);
-		break;
-	}
-}
-
-void Entity::UnsubscribeFromEvent(ComponentEvent componentEvent, EventCallBack callBack)
-{
-	switch(componentEvent)
-	{
-	case ComponentAdded:
-		m_OnComponentAddedCallBacks.erase(remove(m_OnComponentAddedCallBacks.begin(), m_OnComponentAddedCallBacks.end(), callBack), m_OnComponentAddedCallBacks.end());
-		break;
-
-	case ComponentRemoved:
-		m_OnComponentRemovedCallBacks.erase(remove(m_OnComponentRemovedCallBacks.begin(), m_OnComponentRemovedCallBacks.end(), callBack), m_OnComponentRemovedCallBacks.end());
-		break;
-	}
+	m_pObserver = pObserver;
 }

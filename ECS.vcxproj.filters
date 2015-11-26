@@ -57,6 +57,9 @@
     <ClInclude Include="Group\Group.h">
       <Filter>Group</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\INotifiable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Main">
