@@ -30,3 +30,17 @@ bool Group::CompareComponentIDs(vector<ComponentID>& componentIDs) const
 
 	return true;
 }
+
+void Group::AddEntity(Entity* pEntity)
+{
+	if(pEntity){
+		m_pEntities.insert(pEntity);
+	}
+}
+
+void Group::RemoveEntity(Entity* pEntity)
+{
+	if(pEntity){
+		m_pEntities.erase(pEntity);
+	}
+}

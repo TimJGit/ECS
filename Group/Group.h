@@ -17,6 +17,9 @@ private:
 	void SetComponentIDs(const vector<ComponentID>& componentIDs);
 	bool CompareComponentIDs(vector<ComponentID>& componentIDs) const;
 
+	void AddEntity(Entity* pEntity);
+	void RemoveEntity(Entity* pEntity);
+
 	friend class Pool;
 
 	Group(const Group&) = delete;

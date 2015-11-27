@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "EntityData.h"
 
 Entity::Entity() :
 	m_pObserver(nullptr)
@@ -8,8 +9,6 @@ Entity::Entity() :
 
 Entity::~Entity()
 {
-	delete m_pObserver;
-
 	for(IComponent* pComponent : m_pComponents){
 		delete pComponent;
 	}
@@ -36,7 +35,7 @@ void Entity::AddComponent(IComponent* pComponent)
 
 	m_pComponents[componentID] = pComponent;
 
-	m_pObserver->Notify(this);
+	NotifyObserver(componentID, ComponentEvent::ComponentAdded);
 }
 
 void Entity::RemoveComponent(ComponentID componentID)
@@ -50,10 +49,10 @@ void Entity::RemoveComponent(ComponentID componentID)
 	delete m_pComponents[componentID];
 	m_pComponents[componentID] = nullptr;
 
-	m_pObserver->Notify(this);
+	NotifyObserver(componentID, ComponentEvent::ComponentRemoved);
 }
 
-IComponent* Entity::GetComponent(ComponentID componentID) const
+IComponent& Entity::GetComponent(ComponentID componentID) const
 {
 	if(!HasComponent(componentID)){
 		stringstream buffer;
@@ -61,10 +60,21 @@ IComponent* Entity::GetComponent(ComponentID componentID) const
 		throw EntityDoesNotHaveComponentException(buffer.str().c_str());
 	}
 
-	return m_pComponents[componentID];
+	return *m_pComponents[componentID];
 }
 
 void Entity::SetObserver(INotifiable* pObserver)
 {
 	m_pObserver = pObserver;
+}
+
+inline void Entity::NotifyObserver(ComponentID componentID, ComponentEvent componentEvent)
+{
+	EntityData* pEntityData = new EntityData();
+	
+	pEntityData->SetEntity(this);
+	pEntityData->SetComponentID(componentID);
+	pEntityData->SetComponentEvent(componentEvent);
+
+	m_pObserver->Notify(pEntityData);
 }
