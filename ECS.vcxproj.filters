@@ -10,9 +10,6 @@
     <ClCompile Include="Helpers\Vector3.cpp">
       <Filter>Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="Components\PositionComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Pool\Pool.cpp">
       <Filter>Pool</Filter>
     </ClCompile>
@@ -62,6 +59,15 @@
     </ClInclude>
     <ClInclude Include="Entity\EntityData.h">
       <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\TypeComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LevelComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Components.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,8 @@
 #include "../Helpers/stdafx.h"
-#include "../Pool/Pool.h"
+#include "../Components/Components.h"
 #include "../Entity/Entity.h"
 #include "../Group/Group.h"
-#include "../Components/PositionComponent.h"
+#include "../Pool/Pool.h"
 
 void RunTest()
 {
