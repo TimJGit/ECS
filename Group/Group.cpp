@@ -8,6 +8,18 @@ Group::~Group()
 {
 }
 
+vector<Entity*> Group::GetEntities() const
+{
+	vector<Entity*> pEntities;
+	pEntities.reserve(m_pEntities.size());
+
+	for(Entity* pEntity : m_pEntities){
+		pEntities.push_back(pEntity);
+	}
+
+	return pEntities;
+}
+
 void Group::SetComponentIDs(const vector<ComponentID>& componentIDs)
 {
 	m_ComponentIDs = componentIDs;

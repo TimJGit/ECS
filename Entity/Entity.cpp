@@ -10,7 +10,9 @@ Entity::Entity() :
 Entity::~Entity()
 {
 	for(IComponent* pComponent : m_pComponents){
-		delete pComponent;
+		if(pComponent){
+			delete pComponent;
+		}
 	}
 }
 

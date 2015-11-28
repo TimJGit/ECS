@@ -23,6 +23,10 @@ private:
 	unordered_set<Group*> m_pGroups;
 	vector<GroupList> m_IndexedGroups;
 
+	inline Group* GetCachedGroup(vector<ComponentID>& componentIDs) const;
+	inline void UpdateIndexedGroups(const vector<ComponentID>& componentIDs, Group* pGroup);
+	inline void AddEntitesToGroup(const vector<ComponentID>& componentIDs, Group* pGroup) const;
+
 	inline void UpdateGroups(const EntityData& entityData) const;
 	inline void AddEntityToGroups(Entity* pEntity, const GroupList& groupList) const;
 	inline void RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList) const;

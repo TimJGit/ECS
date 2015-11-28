@@ -31,10 +31,9 @@ Entity& Pool::CreateEntity()
 
 const Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 {
-	for(Group* pGroup : m_pGroups){
-		if(pGroup->CompareComponentIDs(componentIDs)){
-			return *pGroup;
-		}
+	Group* pCachedGroup = GetCachedGroup(componentIDs);
+	if(pCachedGroup){
+		return *pCachedGroup;
 	}
 	
 	Group* pGroup = new Group();
@@ -42,9 +41,8 @@ const Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 	pGroup->SetComponentIDs(componentIDs);
 	m_pGroups.insert(pGroup);
 
-	for(ComponentID componentID : componentIDs){
-		m_IndexedGroups[componentID].push_back(pGroup);
-	}
+	UpdateIndexedGroups(componentIDs, pGroup);
+	AddEntitesToGroup(componentIDs, pGroup);
 	
 	return *pGroup;
 }
@@ -52,7 +50,39 @@ const Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 void Pool::Notify(void* pData)
 {
 	EntityData* pEntityData = static_cast<EntityData*>(pData);
+
 	UpdateGroups(*pEntityData);
+
+	delete pEntityData;
+}
+
+inline Group* Pool::GetCachedGroup(vector<ComponentID>& componentIDs) const
+{
+	for(Group* pGroup : m_pGroups){
+		if(pGroup->CompareComponentIDs(componentIDs)){
+			return pGroup;
+		}
+	}
+	return nullptr;
+}
+
+inline void Pool::UpdateIndexedGroups(const vector<ComponentID>& componentIDs, Group* pGroup)
+{
+	for(ComponentID componentID : componentIDs){
+		m_IndexedGroups[componentID].push_back(pGroup);
+	}
+}
+
+inline void Pool::AddEntitesToGroup(const vector<ComponentID>& componentIDs, Group* pGroup) const
+{
+	for(Entity* pEntity : m_pEntities){
+		for(ComponentID componentID : componentIDs){
+			if(!pEntity->HasComponent(componentID)){
+				break;
+			}
+		}
+		pGroup->AddEntity(pEntity);
+	}
 }
 
 inline void Pool::UpdateGroups(const EntityData& entityData) const

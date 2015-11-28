@@ -8,6 +8,8 @@ class Group
 public:
 	virtual ~Group();
 
+	vector<Entity*> GetEntities() const;
+
 private:
 	Group();
 
