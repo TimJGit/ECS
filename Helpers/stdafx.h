@@ -22,4 +22,6 @@ using namespace std;
 #include "../Components/ComponentIDs.h"
 #include "../Interfaces/IComponent.h"
 #include "../Interfaces/INotifiable.h"
-#include "../Interfaces/ISystem.h"
+#include "../Interfaces/IInitializeSystem.h"
+#include "../Interfaces/IReactiveSystem.h"
+#include "../Interfaces/IExecuteSystem.h"

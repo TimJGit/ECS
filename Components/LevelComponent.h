@@ -1,5 +1,4 @@
 #pragma once
-#include "../Helpers/stdafx.h"
 
 class LevelComponent : public IComponent
 {

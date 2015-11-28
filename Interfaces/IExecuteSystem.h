@@ -1,9 +1,9 @@
 #pragma once
 
-class ISystem
+class IExecuteSystem
 {
 public:
-	virtual ~ISystem() { }
+	virtual ~IExecuteSystem() { }
 
 	virtual void Execute() = 0;
 };

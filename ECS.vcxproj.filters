@@ -4,9 +4,6 @@
     <ClCompile Include="Main\main.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="RootSystem\RootSystem.cpp">
-      <Filter>RootSytem</Filter>
-    </ClCompile>
     <ClCompile Include="Helpers\Vector3.cpp">
       <Filter>Helpers</Filter>
     </ClCompile>
@@ -21,13 +18,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RootSystem\RootSystem.h">
-      <Filter>RootSytem</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IComponent.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Interfaces\ISystem.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Helpers\stdafx.h">
@@ -69,13 +60,19 @@
     <ClInclude Include="Components\Components.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\IExecuteSystem.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IInitializeSystem.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IReactiveSystem.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Main">
       <UniqueIdentifier>{db649f28-cd4f-47fb-ad51-acbb6db5439d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RootSytem">
-      <UniqueIdentifier>{b3d53a7d-0f02-43c0-9a17-1734b531895f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Interfaces">
       <UniqueIdentifier>{b546c1e8-faef-49a4-a19d-5ad5280b5bac}</UniqueIdentifier>
