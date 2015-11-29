@@ -3,7 +3,7 @@
 
 class Entity;
 
-class IReactiveSystem
+class IReactiveSystem : public ISystem
 {
 public:
 	virtual ~IReactiveSystem() { }

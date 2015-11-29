@@ -1,6 +1,6 @@
 #pragma once
 
-class IExecuteSystem
+class IExecuteSystem : public ISystem
 {
 public:
 	virtual ~IExecuteSystem() { }

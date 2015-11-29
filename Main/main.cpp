@@ -6,8 +6,6 @@
 
 void RunTest()
 {
-	Pool* pPool = new Pool();
-	delete pPool;
 }
 
 int main()

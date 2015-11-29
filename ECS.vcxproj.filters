@@ -16,6 +16,9 @@
     <ClCompile Include="Entity\Entity.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="RootSystem\RootSystem.cpp">
+      <Filter>RootSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interfaces\IComponent.h">
@@ -69,6 +72,12 @@
     <ClInclude Include="Interfaces\IReactiveSystem.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\ISystem.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="RootSystem\RootSystem.h">
+      <Filter>RootSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Main">
@@ -91,6 +100,9 @@
     </Filter>
     <Filter Include="Group">
       <UniqueIdentifier>{5ade8466-02a3-49ee-9c33-40becfe13f72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RootSystem">
+      <UniqueIdentifier>{e00e6a59-ce03-487a-9275-cbf9d9543596}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
