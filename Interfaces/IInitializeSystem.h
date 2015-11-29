@@ -1,6 +1,6 @@
 #pragma once
 
-class IInitializeSystem : public ISystem
+class IInitializeSystem
 {
 public:
 	virtual ~IInitializeSystem() { }
