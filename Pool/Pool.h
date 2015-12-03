@@ -14,7 +14,7 @@ public:
 	virtual ~Pool();
 
 	Entity& CreateEntity();
-	const Group& GetGroup(vector<ComponentID> componentIDs);
+	Group& GetGroup(vector<ComponentID> componentIDs);
 
 	virtual void Notify(void* pData);
 

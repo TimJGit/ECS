@@ -29,7 +29,7 @@ Entity& Pool::CreateEntity()
 	return *pEntity;
 }
 
-const Group& Pool::GetGroup(vector<ComponentID> componentIDs)
+Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 {
 	Group* pCachedGroup = GetCachedGroup(componentIDs);
 	if(pCachedGroup){
@@ -50,10 +50,7 @@ const Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 void Pool::Notify(void* pData)
 {
 	EntityData* pEntityData = static_cast<EntityData*>(pData);
-
 	UpdateGroups(*pEntityData);
-
-	delete pEntityData;
 }
 
 inline Group* Pool::GetCachedGroup(vector<ComponentID>& componentIDs) const

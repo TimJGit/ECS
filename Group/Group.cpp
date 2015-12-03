@@ -20,6 +20,11 @@ vector<Entity*> Group::GetEntities() const
 	return pEntities;
 }
 
+void Group::AddObserver(INotifiable* pObserver)
+{
+	m_pObservers.push_back(pObserver);
+}
+
 void Group::SetComponentIDs(const vector<ComponentID>& componentIDs)
 {
 	m_ComponentIDs = componentIDs;
@@ -47,6 +52,7 @@ void Group::AddEntity(Entity* pEntity)
 {
 	if(pEntity){
 		m_pEntities.insert(pEntity);
+		NotifyObservers();
 	}
 }
 
@@ -54,5 +60,13 @@ void Group::RemoveEntity(Entity* pEntity)
 {
 	if(pEntity){
 		m_pEntities.erase(pEntity);
+		NotifyObservers();
+	}
+}
+
+inline void Group::NotifyObservers() const
+{
+	for(INotifiable* pObserver : m_pObservers){
+		pObserver->Notify(nullptr);
 	}
 }

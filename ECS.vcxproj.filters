@@ -22,6 +22,9 @@
     <ClCompile Include="Systems\InitializeSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\ReactiveSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interfaces\IComponent.h">
@@ -82,6 +85,9 @@
       <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="Systems\InitializeSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\ReactiveSystem.h">
       <Filter>Systems</Filter>
     </ClInclude>
   </ItemGroup>

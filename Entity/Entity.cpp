@@ -79,4 +79,6 @@ inline void Entity::NotifyObserver(ComponentID componentID, ComponentEvent compo
 	pEntityData->SetComponentEvent(componentEvent);
 
 	m_pObserver->Notify(pEntityData);
+
+	delete pEntityData;
 }
