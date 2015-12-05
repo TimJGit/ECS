@@ -2,7 +2,7 @@
 #include "../Helpers/stdafx.h"
 
 class Entity;
-class EntityData;
+class EntityPoolData;
 class Group;
 
 typedef vector<Group*> GroupList;
@@ -27,7 +27,7 @@ private:
 	inline void UpdateIndexedGroups(const vector<ComponentID>& componentIDs, Group* pGroup);
 	inline void AddEntitesToGroup(const vector<ComponentID>& componentIDs, Group* pGroup) const;
 
-	inline void UpdateGroups(const EntityData& entityData) const;
+	inline void UpdateGroups(const EntityPoolData& entityData) const;
 	inline void AddEntityToGroups(Entity* pEntity, const GroupList& groupList) const;
 	inline void RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList) const;
 

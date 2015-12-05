@@ -22,7 +22,12 @@ vector<Entity*> Group::GetEntities() const
 
 void Group::AddObserver(INotifiable* pObserver)
 {
-	m_pObservers.push_back(pObserver);
+	m_pObservers.insert(pObserver);
+}
+
+void Group::RemoveObserver(INotifiable* pObserver)
+{
+	m_pObservers.erase(pObserver);
 }
 
 void Group::SetComponentIDs(const vector<ComponentID>& componentIDs)

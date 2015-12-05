@@ -72,13 +72,13 @@ void Entity::SetObserver(INotifiable* pObserver)
 
 inline void Entity::NotifyObserver(ComponentID componentID, ComponentEvent componentEvent)
 {
-	EntityData* pEntityData = new EntityData();
+	EntityPoolData* pEntityPoolData = new EntityPoolData();
 	
-	pEntityData->SetEntity(this);
-	pEntityData->SetComponentID(componentID);
-	pEntityData->SetComponentEvent(componentEvent);
+	pEntityPoolData->SetEntity(this);
+	pEntityPoolData->SetComponentID(componentID);
+	pEntityPoolData->SetComponentEvent(componentEvent);
 
-	m_pObserver->Notify(pEntityData);
+	m_pObserver->Notify(pEntityPoolData);
 
-	delete pEntityData;
+	delete pEntityPoolData;
 }
