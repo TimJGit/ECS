@@ -35,12 +35,12 @@ public:
 	Entity* GetEntity() const { return m_pEntity; }
 	void SetEntity(Entity* pEntity) { m_pEntity = pEntity; }
 
-	TriggerEvent GetTriggerEvent() const { return m_TriggerEvent; }
-	void SetTriggerEvent(TriggerEvent triggerEvent) { m_TriggerEvent = triggerEvent; }
+	EntityEvent GetEntityEvent() const { return m_EntityEvent; }
+	void SetEntityEvent(EntityEvent entityEvent) { m_EntityEvent = entityEvent; }
 
 private:
 	Entity* m_pEntity;
-	TriggerEvent m_TriggerEvent;
+	EntityEvent m_EntityEvent;
 
 	EntitySystemData(const EntitySystemData&) = delete;
 	EntitySystemData& operator=(const EntitySystemData&) = delete;

@@ -1,9 +1,20 @@
 #pragma once
 
-class INotifiable
+class EntityPoolData;
+class EntitySystemData;
+
+class INotifiablePool
 {
 public:
-	virtual ~INotifiable() { }
+	virtual ~INotifiablePool() { }
 
-	virtual void Notify(void* pData) = 0;
+	virtual void Notify(EntityPoolData* pData) = 0;
+};
+
+class INotifiableSystem
+{
+public:
+	virtual ~INotifiableSystem() { }
+
+	virtual void Notify(EntitySystemData* pData) = 0;
 };

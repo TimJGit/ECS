@@ -1,4 +1,5 @@
 #include "Group.h"
+#include "../Entity/EntityData.h"
 
 Group::Group()
 {
@@ -20,12 +21,12 @@ vector<Entity*> Group::GetEntities() const
 	return pEntities;
 }
 
-void Group::AddObserver(INotifiable* pObserver)
+void Group::AddObserver(INotifiableSystem* pObserver)
 {
 	m_pObservers.insert(pObserver);
 }
 
-void Group::RemoveObserver(INotifiable* pObserver)
+void Group::RemoveObserver(INotifiableSystem* pObserver)
 {
 	m_pObservers.erase(pObserver);
 }
@@ -57,7 +58,7 @@ void Group::AddEntity(Entity* pEntity)
 {
 	if(pEntity){
 		m_pEntities.insert(pEntity);
-		NotifyObservers();
+		NotifyObservers(pEntity, EntityEvent::EntityAdded);
 	}
 }
 
@@ -65,13 +66,20 @@ void Group::RemoveEntity(Entity* pEntity)
 {
 	if(pEntity){
 		m_pEntities.erase(pEntity);
-		NotifyObservers();
+		NotifyObservers(pEntity, EntityEvent::EntityRemoved);
 	}
 }
 
-inline void Group::NotifyObservers() const
+inline void Group::NotifyObservers(Entity* pEntity, EntityEvent entityEvent) const
 {
-	for(INotifiable* pObserver : m_pObservers){
-		pObserver->Notify(nullptr);
+	for(INotifiableSystem* pObserver : m_pObservers){
+		EntitySystemData* pData = new EntitySystemData();
+
+		pData->SetEntity(pEntity);
+		pData->SetEntityEvent(entityEvent);
+
+		pObserver->Notify(pData);
+
+		delete pData;
 	}
 }

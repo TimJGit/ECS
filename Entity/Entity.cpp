@@ -65,20 +65,20 @@ IComponent& Entity::GetComponent(ComponentID componentID) const
 	return *m_pComponents[componentID];
 }
 
-void Entity::SetObserver(INotifiable* pObserver)
+void Entity::SetObserver(INotifiablePool* pObserver)
 {
 	m_pObserver = pObserver;
 }
 
 inline void Entity::NotifyObserver(ComponentID componentID, ComponentEvent componentEvent)
 {
-	EntityPoolData* pEntityPoolData = new EntityPoolData();
+	EntityPoolData* pData = new EntityPoolData();
 	
-	pEntityPoolData->SetEntity(this);
-	pEntityPoolData->SetComponentID(componentID);
-	pEntityPoolData->SetComponentEvent(componentEvent);
+	pData->SetEntity(this);
+	pData->SetComponentID(componentID);
+	pData->SetComponentEvent(componentEvent);
 
-	m_pObserver->Notify(pEntityPoolData);
+	m_pObserver->Notify(pData);
 
-	delete pEntityPoolData;
+	delete pData;
 }

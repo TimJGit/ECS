@@ -17,6 +17,7 @@ using namespace std;
 #include <vector>
 #include <Windows.h>
 
+#include "Enums.h"
 #include "Exceptions.h"
 #include "Vector3.h"
 #include "../Components/ComponentIDs.h"

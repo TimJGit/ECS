@@ -9,15 +9,15 @@ public:
 	virtual ~Group();
 
 	vector<Entity*> GetEntities() const;
-	void AddObserver(INotifiable* pObserver);
-	void RemoveObserver(INotifiable* pObserver);
+	void AddObserver(INotifiableSystem* pObserver);
+	void RemoveObserver(INotifiableSystem* pObserver);
 
 private:
 	Group();
 
 	vector<ComponentID> m_ComponentIDs;
 	unordered_set<Entity*> m_pEntities;
-	unordered_set<INotifiable*> m_pObservers;
+	unordered_set<INotifiableSystem*> m_pObservers;
 
 	void SetComponentIDs(const vector<ComponentID>& componentIDs);
 	bool CompareComponentIDs(vector<ComponentID>& componentIDs) const;
@@ -25,7 +25,7 @@ private:
 	void AddEntity(Entity* pEntity);
 	void RemoveEntity(Entity* pEntity);
 
-	inline void NotifyObservers() const;
+	inline void NotifyObservers(Entity* pEntity, EntityEvent entityEvent) const;
 
 	friend class Pool;
 

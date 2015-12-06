@@ -30,6 +30,6 @@ void ReactiveSystem::Execute(vector<Entity*> pEntites)
 	m_pReactiveSystem->Execute(pEntites);
 }
 
-void ReactiveSystem::Notify(void* pData)
+void ReactiveSystem::Notify(EntitySystemData* pData)
 {
 }

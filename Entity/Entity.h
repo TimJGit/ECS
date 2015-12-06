@@ -1,8 +1,6 @@
 #pragma once
 #include "../Helpers/stdafx.h"
 
-enum ComponentEvent { ComponentAdded, ComponentRemoved };
-
 class Entity
 {
 public:
@@ -17,9 +15,9 @@ private:
 	Entity();
 
 	vector<IComponent*> m_pComponents;
-	INotifiable* m_pObserver;
+	INotifiablePool* m_pObserver;
 
-	void SetObserver(INotifiable* pObserver);
+	void SetObserver(INotifiablePool* pObserver);
 	inline void NotifyObserver(ComponentID componentID, ComponentEvent componentEvent);
 
 	friend class Pool;

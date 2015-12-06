@@ -3,8 +3,6 @@
 
 class Entity;
 
-enum TriggerEvent { OnAdded, OnRemoved, OnAddedOrRemoved };
-
 class IReactiveSystem
 {
 public:

@@ -47,10 +47,16 @@ Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 	return *pGroup;
 }
 
-void Pool::Notify(void* pData)
+void Pool::Notify(EntityPoolData* pData)
 {
-	EntityPoolData* pEntityPoolData = static_cast<EntityPoolData*>(pData);
-	UpdateGroups(*pEntityPoolData);
+	GroupList groupList = m_IndexedGroups[pData->GetComponentID()];
+
+	ComponentEvent componentEvent = pData->GetComponentEvent();
+	if(componentEvent == ComponentEvent::ComponentAdded){
+		AddEntityToGroups(pData->GetEntity(), groupList);
+	} else if(componentEvent == ComponentEvent::ComponentRemoved){
+		RemoveEntityFromGroups(pData->GetEntity(), groupList);
+	}
 }
 
 inline Group* Pool::GetCachedGroup(vector<ComponentID>& componentIDs) const
@@ -79,18 +85,6 @@ inline void Pool::AddEntitesToGroup(const vector<ComponentID>& componentIDs, Gro
 			}
 		}
 		pGroup->AddEntity(pEntity);
-	}
-}
-
-inline void Pool::UpdateGroups(const EntityPoolData& entityPoolData) const
-{
-	GroupList groupList = m_IndexedGroups[entityPoolData.GetComponentID()];
-
-	ComponentEvent componentEvent = entityPoolData.GetComponentEvent();
-	if(componentEvent == ComponentEvent::ComponentAdded){
-		AddEntityToGroups(entityPoolData.GetEntity(), groupList);
-	}else if(componentEvent == ComponentEvent::ComponentRemoved){
-		RemoveEntityFromGroups(entityPoolData.GetEntity(), groupList);
 	}
 }
 

@@ -90,6 +90,9 @@
     <ClInclude Include="Systems\ReactiveSystem.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Helpers\Enums.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Main">

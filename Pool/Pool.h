@@ -7,7 +7,7 @@ class Group;
 
 typedef vector<Group*> GroupList;
 
-class Pool : public INotifiable
+class Pool : public INotifiablePool
 {
 public:
 	Pool();
@@ -16,7 +16,7 @@ public:
 	Entity& CreateEntity();
 	Group& GetGroup(vector<ComponentID> componentIDs);
 
-	virtual void Notify(void* pData);
+	virtual void Notify(EntityPoolData* pData);
 
 private:
 	unordered_set<Entity*> m_pEntities;
@@ -27,7 +27,6 @@ private:
 	inline void UpdateIndexedGroups(const vector<ComponentID>& componentIDs, Group* pGroup);
 	inline void AddEntitesToGroup(const vector<ComponentID>& componentIDs, Group* pGroup) const;
 
-	inline void UpdateGroups(const EntityPoolData& entityData) const;
 	inline void AddEntityToGroups(Entity* pEntity, const GroupList& groupList) const;
 	inline void RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList) const;
 
