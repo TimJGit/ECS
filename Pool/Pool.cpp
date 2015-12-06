@@ -1,6 +1,5 @@
 #include "Pool.h"
 #include "../Entity/Entity.h"
-#include "../Entity/EntityData.h"
 #include "../Group/Group.h"
 
 Pool::Pool()
@@ -49,12 +48,16 @@ Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 
 void Pool::Notify(EntityPoolData* pData)
 {
+	if(!pData){
+		throw NullPointerException("Pool::Notify >> Data is null!");
+	}
+
 	GroupList groupList = m_IndexedGroups[pData->GetComponentID()];
 
 	ComponentEvent componentEvent = pData->GetComponentEvent();
 	if(componentEvent == ComponentEvent::ComponentAdded){
 		AddEntityToGroups(pData->GetEntity(), groupList);
-	} else if(componentEvent == ComponentEvent::ComponentRemoved){
+	}else if(componentEvent == ComponentEvent::ComponentRemoved){
 		RemoveEntityFromGroups(pData->GetEntity(), groupList);
 	}
 }
@@ -66,6 +69,7 @@ inline Group* Pool::GetCachedGroup(vector<ComponentID>& componentIDs) const
 			return pGroup;
 		}
 	}
+
 	return nullptr;
 }
 

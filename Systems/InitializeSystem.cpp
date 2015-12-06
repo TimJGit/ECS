@@ -10,7 +10,11 @@ InitializeSystem::~InitializeSystem()
 	delete m_pInitializeSystem;
 }
 
-void InitializeSystem::Initialize()
+void InitializeSystem::Execute()
 {
+	if(!m_pInitializeSystem){
+		throw NullPointerException("InitializeSystem::Execute >> InitializeSystem is null!");
+	}
+
 	m_pInitializeSystem->Initialize();
 }

@@ -1,5 +1,4 @@
 #include "Group.h"
-#include "../Entity/EntityData.h"
 
 Group::Group()
 {
@@ -11,18 +10,15 @@ Group::~Group()
 
 vector<Entity*> Group::GetEntities() const
 {
-	vector<Entity*> pEntities;
-	pEntities.reserve(m_pEntities.size());
-
-	for(Entity* pEntity : m_pEntities){
-		pEntities.push_back(pEntity);
-	}
-
-	return pEntities;
+	return vector<Entity*>(m_pEntities.begin(), m_pEntities.end());
 }
 
 void Group::AddObserver(INotifiableSystem* pObserver)
 {
+	if(!pObserver){
+		throw NullPointerException("Group::AddObserver >> Observer is null!");
+	}
+
 	m_pObservers.insert(pObserver);
 }
 

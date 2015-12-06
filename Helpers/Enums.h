@@ -2,4 +2,4 @@
 
 enum ComponentEvent { ComponentAdded, ComponentRemoved };
 enum EntityEvent { EntityAdded, EntityRemoved };
-enum TriggerEvent { OnTriggerAdded, OnTriggerRemoved, OnTriggerAddedOrRemoved };
+enum TriggerEvent { TriggerAdded, TriggerRemoved, TriggerAddedOrRemoved };

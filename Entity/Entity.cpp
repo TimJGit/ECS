@@ -1,8 +1,6 @@
 #include "Entity.h"
-#include "EntityData.h"
 
-Entity::Entity() :
-	m_pObserver(nullptr)
+Entity::Entity()
 {
 	m_pComponents.resize(TOTAL_COMPONENTS);
 }
@@ -10,9 +8,7 @@ Entity::Entity() :
 Entity::~Entity()
 {
 	for(IComponent* pComponent : m_pComponents){
-		if(pComponent){
-			delete pComponent;
-		}
+		delete pComponent;
 	}
 }
 
@@ -24,7 +20,7 @@ bool Entity::HasComponent(ComponentID componentID) const
 void Entity::AddComponent(IComponent* pComponent)
 {
 	if(!pComponent){
-		throw NullPointerException("Entity::AddComponent >> Cannot add null pointer!");
+		throw NullPointerException("Entity::AddComponent >> Component is null!");
 	}
 
 	ComponentID componentID = pComponent->GetComponentID();

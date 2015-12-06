@@ -1,13 +1,13 @@
 #pragma once
 #include "../Helpers/stdafx.h"
 
-class InitializeSystem : public IInitializeSystem, public ISystem
+class InitializeSystem : public ISystem
 {
 public:
 	InitializeSystem(IInitializeSystem* pInitializeSystem);
 	virtual ~InitializeSystem();
 
-	virtual void Initialize();
+	void Execute();
 
 private:
 	IInitializeSystem* m_pInitializeSystem;

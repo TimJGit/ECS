@@ -1,35 +1,59 @@
 #include "ReactiveSystem.h"
-#include "../Pool/Pool.h"
 #include "../Group/Group.h"
+#include "../Pool/Pool.h"
 
 ReactiveSystem::ReactiveSystem(Pool* pPool, IReactiveSystem* pReactiveSystem) :
 	m_pPool(pPool),
 	m_pReactiveSystem(pReactiveSystem)
 {
-	m_pPool->GetGroup(GetTriggers()).AddObserver(this);
+	SubscribeToGroup();
 }
 
 ReactiveSystem::~ReactiveSystem()
 {
-	m_pPool->GetGroup(GetTriggers()).RemoveObserver(this);
+	UnsubscribeFromGroup();
 	delete m_pReactiveSystem;
 }
 
-vector<ComponentID> ReactiveSystem::GetTriggers()
+void ReactiveSystem::Execute()
 {
-	return m_pReactiveSystem->GetTriggers();
-}
+	if(!m_pPool){
+		throw NullPointerException("ReactiveSystem::Execute >> Pool is null!");
+	}
 
-TriggerEvent ReactiveSystem::GetTriggerEvent()
-{
-	return m_pReactiveSystem->GetTriggerEvent();
-}
+	if(!m_pReactiveSystem){
+		throw NullPointerException("ReactiveSystem::Execute >> ReactiveSystem is null!");
+	}
 
-void ReactiveSystem::Execute(vector<Entity*> pEntites)
-{
-	m_pReactiveSystem->Execute(pEntites);
+	vector<Entity*> collectedEntities(m_pCollectedEntites.begin(), m_pCollectedEntites.end());
+	m_pReactiveSystem->Execute(collectedEntities);
 }
 
 void ReactiveSystem::Notify(EntitySystemData* pData)
 {
+	if(!pData){
+		throw NullPointerException("ReactiveSystem::Notify >> Data is null!");
+	}
+
+	TriggerEvent triggerEvent = m_pReactiveSystem->GetTriggerEvent();
+
+	if(triggerEvent == TriggerEvent::TriggerAdded && pData->GetEntityEvent() == EntityEvent::EntityAdded ||
+	   triggerEvent == TriggerEvent::TriggerRemoved && pData->GetEntityEvent() == EntityEvent::EntityRemoved ||
+	   triggerEvent == TriggerEvent::TriggerAddedOrRemoved){
+		m_pCollectedEntites.insert(pData->GetEntity());
+	}
+}
+
+inline void ReactiveSystem::SubscribeToGroup()
+{
+	if(m_pPool && m_pReactiveSystem){
+		m_pPool->GetGroup(m_pReactiveSystem->GetTriggers()).AddObserver(this);
+	}
+}
+
+inline void ReactiveSystem::UnsubscribeFromGroup()
+{
+	if(m_pPool && m_pReactiveSystem){
+		m_pPool->GetGroup(m_pReactiveSystem->GetTriggers()).RemoveObserver(this);
+	}
 }

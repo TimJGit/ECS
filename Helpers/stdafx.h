@@ -21,6 +21,7 @@ using namespace std;
 #include "Exceptions.h"
 #include "Vector3.h"
 #include "../Components/ComponentIDs.h"
+#include "../Entity/EntityData.h"
 #include "../Interfaces/IComponent.h"
 #include "../Interfaces/INotifiable.h"
 #include "../Interfaces/ISystem.h"
