@@ -1,6 +1,8 @@
 #pragma once
 #include "../Helpers/stdafx.h"
 
+class Entity;
+class EntitySystemData;
 class Pool;
 
 class ReactiveSystem : public ISystem, public INotifiableSystem

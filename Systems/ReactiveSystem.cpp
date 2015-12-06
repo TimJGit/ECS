@@ -1,4 +1,5 @@
 #include "ReactiveSystem.h"
+#include "../Entity/EntityData.h"
 #include "../Group/Group.h"
 #include "../Pool/Pool.h"
 
@@ -27,6 +28,8 @@ void ReactiveSystem::Execute()
 
 	vector<Entity*> collectedEntities(m_pCollectedEntites.begin(), m_pCollectedEntites.end());
 	m_pReactiveSystem->Execute(collectedEntities);
+
+	m_pCollectedEntites.clear();
 }
 
 void ReactiveSystem::Notify(EntitySystemData* pData)

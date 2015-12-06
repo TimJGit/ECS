@@ -1,4 +1,5 @@
 #include "Group.h"
+#include "../Entity/EntityData.h"
 
 Group::Group()
 {

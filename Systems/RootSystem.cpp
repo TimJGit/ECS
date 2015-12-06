@@ -1,4 +1,7 @@
 #include "RootSystem.h"
+#include "ExecuteSystem.h"
+#include "InitializeSystem.h"
+#include "ReactiveSystem.h"
 
 RootSystem::RootSystem()
 {
@@ -6,16 +9,16 @@ RootSystem::RootSystem()
 
 RootSystem::~RootSystem()
 {
-	for(IInitializeSystem* pInitializeSystem : m_pInitializeSystems){
+	for(InitializeSystem* pInitializeSystem : m_pInitializeSystems){
 		delete pInitializeSystem;
 	}
 
-	for(IReactiveSystem* pReactiveSystem : m_pReactiveSystems){
-		delete pReactiveSystem;
+	for(ExecuteSystem* pExecuteSystem : m_pExecuteSystems){
+		delete pExecuteSystem;
 	}
 
-	for(IExecuteSystem* pExecuteSystem : m_pExecuteSystems){
-		delete pExecuteSystem;
+	for(ReactiveSystem* pReactiveSystem : m_pReactiveSystems){
+		delete pReactiveSystem;
 	}
 }
 
@@ -27,23 +30,23 @@ RootSystem& RootSystem::GetInstance()
 
 void RootSystem::AddSystem(ISystem* pSystem)
 {
-	IInitializeSystem* pInitializeSystem = dynamic_cast<IInitializeSystem*>(pSystem);
+	InitializeSystem* pInitializeSystem = dynamic_cast<InitializeSystem*>(pSystem);
 	if(pInitializeSystem){
-		m_pInitializeSystems.push_back(pInitializeSystem);
+		m_pInitializeSystems.insert(pInitializeSystem);
 		return;
 	}
 
-	IReactiveSystem* pReactiveSystem = dynamic_cast<IReactiveSystem*>(pSystem);
-	if(pReactiveSystem){
-		m_pReactiveSystems.push_back(pReactiveSystem);
-		return;
-	}
-
-	IExecuteSystem* pExecuteSystem = dynamic_cast<IExecuteSystem*>(pSystem);
+	ExecuteSystem* pExecuteSystem = dynamic_cast<ExecuteSystem*>(pSystem);
 	if(pExecuteSystem){
-		m_pExecuteSystems.push_back(pExecuteSystem);
+		m_pExecuteSystems.insert(pExecuteSystem);
 		return;
 	}
 
-	throw UnknownSystemTypeException("RootSystem::AddSystem >> The system cannot be added as it has an unknown type!");
+	ReactiveSystem* pReactiveSystem = dynamic_cast<ReactiveSystem*>(pSystem);
+	if(pReactiveSystem){
+		m_pReactiveSystems.insert(pReactiveSystem);
+		return;
+	}
+
+	throw UnknownSystemTypeException("RootSystem::AddSystem >> System has an unknown type!");
 }

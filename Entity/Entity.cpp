@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "EntityData.h"
 
 Entity::Entity()
 {

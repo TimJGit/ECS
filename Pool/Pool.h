@@ -2,6 +2,7 @@
 #include "../Helpers/stdafx.h"
 
 class Entity;
+class EntityPoolData;
 class Group;
 
 typedef vector<Group*> GroupList;

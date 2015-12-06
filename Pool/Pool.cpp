@@ -1,5 +1,6 @@
 #include "Pool.h"
 #include "../Entity/Entity.h"
+#include "../Entity/EntityData.h"
 #include "../Group/Group.h"
 
 Pool::Pool()
