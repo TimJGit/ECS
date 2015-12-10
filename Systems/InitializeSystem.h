@@ -7,7 +7,7 @@ public:
 	InitializeSystem(IInitializeSystem* pInitializeSystem);
 	virtual ~InitializeSystem();
 
-	void Execute();
+	virtual void Execute();
 
 private:
 	IInitializeSystem* m_pInitializeSystem;

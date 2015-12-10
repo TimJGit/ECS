@@ -11,8 +11,7 @@ public:
 	ReactiveSystem(Pool* pPool, IReactiveSystem* pReactiveSystem);
 	virtual ~ReactiveSystem();
 
-	void Execute();
-
+	virtual void Execute();
 	virtual void Notify(EntitySystemData* pData);
 
 private:

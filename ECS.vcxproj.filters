@@ -99,6 +99,9 @@
     <ClInclude Include="Systems\ExecuteSystem.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Systems\Systems.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Main">

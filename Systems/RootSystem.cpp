@@ -9,23 +9,13 @@ RootSystem::RootSystem()
 
 RootSystem::~RootSystem()
 {
-	for(InitializeSystem* pInitializeSystem : m_pInitializeSystems){
-		delete pInitializeSystem;
+	for(ISystem* pSystem : m_pInitializeSystems){
+		delete pSystem;
 	}
 
-	for(ExecuteSystem* pExecuteSystem : m_pExecuteSystems){
-		delete pExecuteSystem;
+	for(ISystem* pSystem : m_pExecuteSystems){
+		delete pSystem;
 	}
-
-	for(ReactiveSystem* pReactiveSystem : m_pReactiveSystems){
-		delete pReactiveSystem;
-	}
-}
-
-RootSystem& RootSystem::GetInstance()
-{
-	static RootSystem instance;
-	return instance;
 }
 
 void RootSystem::AddSystem(ISystem* pSystem)
@@ -44,9 +34,23 @@ void RootSystem::AddSystem(ISystem* pSystem)
 
 	ReactiveSystem* pReactiveSystem = dynamic_cast<ReactiveSystem*>(pSystem);
 	if(pReactiveSystem){
-		m_pReactiveSystems.insert(pReactiveSystem);
+		m_pExecuteSystems.insert(pReactiveSystem);
 		return;
 	}
 
 	throw UnknownSystemTypeException("RootSystem::AddSystem >> System has an unknown type!");
+}
+
+void RootSystem::Initialize()
+{
+	for(ISystem* pSystem : m_pInitializeSystems){
+		pSystem->Execute();
+	}
+}
+
+void RootSystem::Execute()
+{
+	for(ISystem* pSystem : m_pExecuteSystems){
+		pSystem->Execute();
+	}
 }

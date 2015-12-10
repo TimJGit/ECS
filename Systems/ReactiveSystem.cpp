@@ -26,6 +26,10 @@ void ReactiveSystem::Execute()
 		throw NullPointerException("ReactiveSystem::Execute >> ReactiveSystem is null!");
 	}
 
+	if(m_pCollectedEntites.size() == 0){
+		return;
+	}
+
 	vector<Entity*> collectedEntities(m_pCollectedEntites.begin(), m_pCollectedEntites.end());
 	m_pReactiveSystem->Execute(collectedEntities);
 

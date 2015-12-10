@@ -8,17 +8,16 @@ class ReactiveSystem;
 class RootSystem
 {
 public:
+	RootSystem();
 	virtual ~RootSystem();
 
-	static RootSystem& GetInstance();
 	void AddSystem(ISystem* pSystem);
+	void Initialize();
+	void Execute();
 
 private:
-	RootSystem();
-
-	unordered_set<InitializeSystem*> m_pInitializeSystems;
-	unordered_set<ExecuteSystem*> m_pExecuteSystems;
-	unordered_set<ReactiveSystem*> m_pReactiveSystems;
+	unordered_set<ISystem*> m_pInitializeSystems;
+	unordered_set<ISystem*> m_pExecuteSystems;
 
 	RootSystem(const RootSystem&) = delete;
 	void operator=(const RootSystem&) = delete;

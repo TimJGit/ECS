@@ -7,7 +7,7 @@ public:
 	ExecuteSystem(IExecuteSystem* pExecuteSystem);
 	virtual ~ExecuteSystem();
 
-	void Execute();
+	virtual void Execute();
 
 private:
 	IExecuteSystem* m_pExecuteSystem;

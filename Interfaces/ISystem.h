@@ -5,6 +5,5 @@ class ISystem
 public:
 	virtual ~ISystem() { }
 
-protected:
-	ISystem() { }
+	virtual void Execute() = 0;
 };

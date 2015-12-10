@@ -3,6 +3,7 @@
 #include "../Entity/Entity.h"
 #include "../Group/Group.h"
 #include "../Pool/Pool.h"
+#include "../Systems/Systems.h"
 
 void RunTest()
 {
