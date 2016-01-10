@@ -18,5 +18,5 @@ private:
 	Vector3 m_Position;
 
 	PositionComponent(const PositionComponent&) = delete;
-	void operator=(const PositionComponent&) = delete;
+	PositionComponent& operator=(const PositionComponent&) = delete;
 };

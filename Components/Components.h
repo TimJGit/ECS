@@ -1,5 +1,6 @@
 #pragma once
 
-#include "PositionComponent.h"
+#include "BuildingComponent.h"
 #include "LevelComponent.h"
+#include "PositionComponent.h"
 #include "TypeComponent.h"

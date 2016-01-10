@@ -16,5 +16,5 @@ private:
 	int m_Level;
 
 	LevelComponent(const LevelComponent&) = delete;
-	void operator=(const LevelComponent&) = delete;
+	LevelComponent& operator=(const LevelComponent&) = delete;
 };

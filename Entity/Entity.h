@@ -23,5 +23,5 @@ private:
 	friend class Pool;
 
 	Entity(const Entity&) = delete;
-	void operator=(const Entity&) = delete;
+	Entity& operator=(const Entity&) = delete;
 };

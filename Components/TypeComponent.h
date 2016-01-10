@@ -16,5 +16,5 @@ private:
 	char* m_Type;
 
 	TypeComponent(const TypeComponent&) = delete;
-	void operator=(const TypeComponent&) = delete;
+	TypeComponent& operator=(const TypeComponent&) = delete;
 };

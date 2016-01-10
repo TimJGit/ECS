@@ -20,5 +20,5 @@ private:
 	unordered_set<ISystem*> m_pExecuteSystems;
 
 	RootSystem(const RootSystem&) = delete;
-	void operator=(const RootSystem&) = delete;
+	RootSystem& operator=(const RootSystem&) = delete;
 };
