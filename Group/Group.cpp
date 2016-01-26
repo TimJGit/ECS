@@ -34,6 +34,11 @@ void Group::SetComponentIDs(const vector<ComponentID>& componentIDs)
 	sort(m_ComponentIDs.begin(), m_ComponentIDs.end());
 }
 
+const vector<ComponentID>& Group::GetComponentIDs() const
+{
+	return m_ComponentIDs;
+}
+
 bool Group::CompareComponentIDs(vector<ComponentID>& componentIDs) const
 {
 	if(m_ComponentIDs.size() != componentIDs.size()){

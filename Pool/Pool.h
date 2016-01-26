@@ -24,10 +24,11 @@ private:
 	vector<GroupList> m_IndexedGroups;
 
 	inline Group* GetCachedGroup(vector<ComponentID>& componentIDs) const;
-	inline void UpdateIndexedGroups(const vector<ComponentID>& componentIDs, Group* pGroup);
-	inline void AddEntitesToGroup(const vector<ComponentID>& componentIDs, Group* pGroup) const;
+	inline void UpdateIndexedGroups(Group* pGroup);
+	inline void AddEntitesToGroup(Group* pGroup) const;
 
 	inline void AddEntityToGroups(Entity* pEntity, const GroupList& groupList) const;
+	inline void AddEntityToGroup(Entity* pEntity, Group* pGroup) const;
 	inline void RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList) const;
 
 	Pool(const Pool&) = delete;

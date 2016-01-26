@@ -34,6 +34,8 @@ public:
 		for(int i = 0; i < 10; i++){
 			Entity& entity = Repo::Core().CreateEntity();
 			entity.AddComponent(new BuildingComponent());
+			entity.AddComponent(new TypeComponent("House"));
+			entity.AddComponent(new LevelComponent(1));
 		}
 	}
 
@@ -42,31 +44,31 @@ private:
 	BuildingSetupSystem& operator=(const BuildingSetupSystem&) = delete;
 };
 
-class BuildingCreatedSystem : public IReactiveSystem
+class BuildingPositioningSystem : public IReactiveSystem
 {
 public:
-	BuildingCreatedSystem() { }
-	virtual ~BuildingCreatedSystem() { }
+	BuildingPositioningSystem() { }
+	virtual ~BuildingPositioningSystem() { }
 
-	virtual vector<ComponentID> GetTriggers() { return { ComponentID::Building }; };
+	virtual vector<ComponentID> GetTriggers() { return { ComponentID::Building, ComponentID::Type, ComponentID::Level }; };
 	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerAdded; };
 	virtual void Execute(vector<Entity*> pEntites)
 	{
 		for(Entity* pEntity : pEntites){
-			cout << "Building created!" << endl;
+			pEntity->AddComponent(new PositionComponent(2.0f, 5.0f, 0.5f));
 		}
 	}
 
 private:
-	BuildingCreatedSystem(const BuildingCreatedSystem&) = delete;
-	BuildingCreatedSystem& operator=(const BuildingCreatedSystem&) = delete;
+	BuildingPositioningSystem(const BuildingPositioningSystem&) = delete;
+	BuildingPositioningSystem& operator=(const BuildingPositioningSystem&) = delete;
 };
 
 void RunTest()
 {
 	RootSystem* pRootSystem = new RootSystem();
 	pRootSystem->AddSystem(new InitializeSystem(new BuildingSetupSystem()));
-	pRootSystem->AddSystem(new ReactiveSystem(&Repo::Core(), new BuildingCreatedSystem()));
+	pRootSystem->AddSystem(new ReactiveSystem(&Repo::Core(), new BuildingPositioningSystem()));
 
 	pRootSystem->Initialize();
 	while(true){
@@ -86,6 +88,7 @@ int main()
 	}catch(runtime_error error){
 		SetConsoleTextAttribute(hnd, 12);
 		cout << "ERROR >> " << error.what() << endl;
+		cin.get();
 	}
 
 	_CrtDumpMemoryLeaks();

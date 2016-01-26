@@ -20,6 +20,7 @@ private:
 	unordered_set<INotifiableSystem*> m_pObservers;
 
 	void SetComponentIDs(const vector<ComponentID>& componentIDs);
+	const vector<ComponentID>& GetComponentIDs() const;
 	bool CompareComponentIDs(vector<ComponentID>& componentIDs) const;
 
 	void AddEntity(Entity* pEntity);
