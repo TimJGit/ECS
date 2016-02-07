@@ -10,18 +10,23 @@ class Repo
 public:
 	virtual ~Repo() { }
 
-	static Pool& Core()
+	static Pool* Core()
 	{
-		static Pool corePool;
-		return corePool;
+		if(!m_pCorePool){
+			m_pCorePool = new Pool();
+		}
+		return m_pCorePool;
 	}
 
 private:
 	Repo() { }
 
+	static Pool* m_pCorePool;
+
 	Repo(const Repo&) = delete;
 	Repo& operator=(const Repo&) = delete;
 };
+Pool* Repo::m_pCorePool = nullptr;
 
 class BuildingSetupSystem : public IInitializeSystem
 {
@@ -32,10 +37,10 @@ public:
 	virtual void Initialize()
 	{
 		for(int i = 0; i < 10; i++){
-			Entity& entity = Repo::Core().CreateEntity();
-			entity.AddComponent(new BuildingComponent());
-			entity.AddComponent(new TypeComponent("House"));
-			entity.AddComponent(new LevelComponent(1));
+			Entity* pEntity = Repo::Core()->CreateEntity();
+			pEntity->AddComponent(new BuildingComponent());
+			pEntity->AddComponent(new TypeComponent("House"));
+			pEntity->AddComponent(new LevelComponent(1));
 		}
 	}
 
@@ -68,15 +73,17 @@ void RunTest()
 {
 	RootSystem* pRootSystem = new RootSystem();
 	pRootSystem->AddSystem(new InitializeSystem(new BuildingSetupSystem()));
-	pRootSystem->AddSystem(new ReactiveSystem(&Repo::Core(), new BuildingPositioningSystem()));
+	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingPositioningSystem()));
 
 	pRootSystem->Initialize();
 	while(true){
+		pRootSystem->Execute();
 		if(GetAsyncKeyState(VK_ESCAPE)){
 			break;
 		}
-		pRootSystem->Execute();
 	}
+	delete pRootSystem;
+	delete Repo::Core();
 }
 
 int main()
@@ -92,4 +99,5 @@ int main()
 	}
 
 	_CrtDumpMemoryLeaks();
+	return 0;
 }

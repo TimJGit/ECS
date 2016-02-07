@@ -1,4 +1,5 @@
 #pragma once
+#include "../Entity/Entity.h"
 
 class LevelComponent : public IComponent
 {
@@ -9,12 +10,17 @@ public:
 
 	virtual ComponentID GetComponentID() const { return ComponentID::Level; }
 
-	int GetLevel() const { return m_Level; }
-	void SetLevel(int level) { m_Level = level; }
-
 private:
 	int m_Level;
+
+	friend int GetLevel(Entity* pEntity);
 
 	LevelComponent(const LevelComponent&) = delete;
 	LevelComponent& operator=(const LevelComponent&) = delete;
 };
+
+int GetLevel(Entity* pEntity)
+{
+	LevelComponent* pLevelComponent = dynamic_cast<LevelComponent*>(pEntity->GetComponent(ComponentID::Level));
+	return pLevelComponent->m_Level;
+}

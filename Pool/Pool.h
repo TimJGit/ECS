@@ -13,7 +13,7 @@ public:
 	Pool();
 	virtual ~Pool();
 
-	Entity& CreateEntity();
+	Entity* CreateEntity();
 	Group& GetGroup(vector<ComponentID> componentIDs);
 
 	virtual void Notify(EntityPoolData* pData);

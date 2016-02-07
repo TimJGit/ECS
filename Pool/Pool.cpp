@@ -19,14 +19,14 @@ Pool::~Pool()
 	}
 }
 
-Entity& Pool::CreateEntity()
+Entity* Pool::CreateEntity()
 {
 	Entity* pEntity = new Entity();
 
 	pEntity->SetObserver(this);
 	m_pEntities.insert(pEntity);
 
-	return *pEntity;
+	return pEntity;
 }
 
 Group& Pool::GetGroup(vector<ComponentID> componentIDs)

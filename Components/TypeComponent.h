@@ -1,4 +1,5 @@
 #pragma once
+#include "../Entity/Entity.h"
 
 class TypeComponent : public IComponent
 {
@@ -9,12 +10,17 @@ public:
 
 	virtual ComponentID GetComponentID() const { return ComponentID::Type; }
 
-	const char* GetType() const { return m_Type; }
-	void SetType(char* type) { m_Type = type; }
-
 private:
 	char* m_Type;
+
+	friend const char* GetType(Entity* pEntity);
 
 	TypeComponent(const TypeComponent&) = delete;
 	TypeComponent& operator=(const TypeComponent&) = delete;
 };
+
+const char* GetType(Entity* pEntity)
+{
+	TypeComponent* pTypeComponent = dynamic_cast<TypeComponent*>(pEntity->GetComponent(ComponentID::Type));
+	return pTypeComponent->m_Type;
+}

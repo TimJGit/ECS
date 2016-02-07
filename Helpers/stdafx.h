@@ -9,7 +9,6 @@ using namespace std;
 #include <crtdbg.h>
 
 #include <algorithm>
-#include <functional>
 #include <iostream>
 #include <math.h>
 #include <sstream>

@@ -51,7 +51,13 @@ void Entity::RemoveComponent(ComponentID componentID)
 	NotifyObserver(componentID, ComponentEvent::ComponentRemoved);
 }
 
-IComponent& Entity::GetComponent(ComponentID componentID) const
+void Entity::ReplaceComponent(IComponent* pComponent)
+{
+	RemoveComponent(pComponent->GetComponentID());
+	AddComponent(pComponent);
+}
+
+IComponent* Entity::GetComponent(ComponentID componentID) const
 {
 	if(!HasComponent(componentID)){
 		stringstream buffer;
@@ -59,7 +65,7 @@ IComponent& Entity::GetComponent(ComponentID componentID) const
 		throw EntityDoesNotHaveComponentException(buffer.str().c_str());
 	}
 
-	return *m_pComponents[componentID];
+	return m_pComponents[componentID];
 }
 
 void Entity::SetObserver(INotifiablePool* pObserver)

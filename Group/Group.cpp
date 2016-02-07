@@ -74,14 +74,13 @@ void Group::RemoveEntity(Entity* pEntity)
 
 inline void Group::NotifyObservers(Entity* pEntity, EntityEvent entityEvent) const
 {
+	EntitySystemData* pData = new EntitySystemData();
+	pData->SetEntity(pEntity);
+	pData->SetEntityEvent(entityEvent);
+
 	for(INotifiableSystem* pObserver : m_pObservers){
-		EntitySystemData* pData = new EntitySystemData();
-
-		pData->SetEntity(pEntity);
-		pData->SetEntityEvent(entityEvent);
-
 		pObserver->Notify(pData);
-
-		delete pData;
 	}
+
+	delete pData;
 }

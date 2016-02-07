@@ -9,7 +9,8 @@ public:
 	bool HasComponent(ComponentID componentID) const;
 	void AddComponent(IComponent* pComponent);
 	void RemoveComponent(ComponentID componentID);
-	IComponent& GetComponent(ComponentID componentID) const;
+	void ReplaceComponent(IComponent* pComponent);
+	IComponent* GetComponent(ComponentID componentID) const;
 
 private:
 	Entity();

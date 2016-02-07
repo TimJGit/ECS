@@ -1,5 +1,6 @@
 #pragma once
 #include "../Helpers/stdafx.h"
+#include "../Entity/Entity.h"
 
 class PositionComponent : public IComponent
 {
@@ -11,12 +12,17 @@ public:
 
 	virtual ComponentID GetComponentID() const { return ComponentID::Position; }
 
-	const Vector3& GetPosition() const { return m_Position; }
-	void SetPosition(const Vector3& position) { m_Position = position; }
-
 private:
 	Vector3 m_Position;
+
+	friend const Vector3& GetPosition(Entity* pEntity);
 
 	PositionComponent(const PositionComponent&) = delete;
 	PositionComponent& operator=(const PositionComponent&) = delete;
 };
+
+const Vector3& GetPosition(Entity* pEntity)
+{
+	PositionComponent* pPositionComponent = dynamic_cast<PositionComponent*>(pEntity->GetComponent(ComponentID::Position));
+	return pPositionComponent->m_Position;
+}
