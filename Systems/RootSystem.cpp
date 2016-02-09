@@ -22,19 +22,19 @@ void RootSystem::AddSystem(ISystem* pSystem)
 {
 	InitializeSystem* pInitializeSystem = dynamic_cast<InitializeSystem*>(pSystem);
 	if(pInitializeSystem){
-		m_pInitializeSystems.insert(pInitializeSystem);
+		m_pInitializeSystems.push_back(pInitializeSystem);
 		return;
 	}
 
 	ExecuteSystem* pExecuteSystem = dynamic_cast<ExecuteSystem*>(pSystem);
 	if(pExecuteSystem){
-		m_pExecuteSystems.insert(pExecuteSystem);
+		m_pExecuteSystems.push_back(pExecuteSystem);
 		return;
 	}
 
 	ReactiveSystem* pReactiveSystem = dynamic_cast<ReactiveSystem*>(pSystem);
 	if(pReactiveSystem){
-		m_pExecuteSystems.insert(pReactiveSystem);
+		m_pExecuteSystems.push_back(pReactiveSystem);
 		return;
 	}
 

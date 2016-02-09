@@ -48,8 +48,6 @@ void ReactiveSystem::Notify(EntitySystemData* pData)
 	   triggerEvent == TriggerEvent::TriggerRemoved && pData->GetEntityEvent() == EntityEvent::EntityRemoved ||
 	   triggerEvent == TriggerEvent::TriggerAddedOrRemoved){
 		m_pCollectedEntites.insert(pData->GetEntity());
-	}else if(triggerEvent == TriggerEvent::TriggerAdded && pData->GetEntityEvent() == EntityEvent::EntityRemoved){
-		m_pCollectedEntites.erase(pData->GetEntity());
 	}
 }
 

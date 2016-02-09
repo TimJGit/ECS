@@ -16,8 +16,8 @@ public:
 	void Execute();
 
 private:
-	unordered_set<ISystem*> m_pInitializeSystems;
-	unordered_set<ISystem*> m_pExecuteSystems;
+	vector<ISystem*> m_pInitializeSystems;
+	vector<ISystem*> m_pExecuteSystems;
 
 	RootSystem(const RootSystem&) = delete;
 	RootSystem& operator=(const RootSystem&) = delete;

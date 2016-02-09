@@ -36,11 +36,11 @@ public:
 
 	virtual void Initialize()
 	{
-		for(int i = 0; i < 10; i++){
+		for(int i = 1; i <= 10; i++){
 			Entity* pEntity = Repo::Core()->CreateEntity();
 			pEntity->AddComponent(new BuildingComponent());
 			pEntity->AddComponent(new TypeComponent("House"));
-			pEntity->AddComponent(new LevelComponent(1));
+			pEntity->AddComponent(new LevelComponent(i));
 		}
 	}
 
@@ -78,7 +78,7 @@ void RunTest()
 	pRootSystem->Initialize();
 	while(true){
 		pRootSystem->Execute();
-		if(GetAsyncKeyState(VK_ESCAPE)){
+		if(GetAsyncKeyState(VK_RETURN)){
 			break;
 		}
 	}
