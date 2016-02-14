@@ -1,5 +1,5 @@
 #pragma once
-#include "../Helpers/stdafx.h"
+#include "../Main/stdafx.h"
 #include "../Entity/Entity.h"
 
 class PositionComponent : public IComponent

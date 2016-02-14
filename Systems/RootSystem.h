@@ -1,5 +1,5 @@
 #pragma once
-#include "../Helpers/stdafx.h"
+#include "../Main/stdafx.h"
 
 class InitializeSystem;
 class ExecuteSystem;

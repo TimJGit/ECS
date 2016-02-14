@@ -1,5 +1,5 @@
 #pragma once
-#include "stdafx.h"
+#include "../Main/stdafx.h"
 
 struct Vector3
 {

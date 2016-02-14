@@ -16,13 +16,13 @@ using namespace std;
 #include <vector>
 #include <Windows.h>
 
-#include "Enums.h"
-#include "Exceptions.h"
-#include "Vector3.h"
 #include "../Components/ComponentIDs.h"
+#include "../Helpers/Enums.h"
+#include "../Helpers/Exceptions.h"
+#include "../Helpers/Vector3.h"
 #include "../Interfaces/IComponent.h"
-#include "../Interfaces/INotifiable.h"
-#include "../Interfaces/ISystem.h"
 #include "../Interfaces/IExecuteSystem.h"
 #include "../Interfaces/IInitializeSystem.h"
+#include "../Interfaces/INotifiable.h"
 #include "../Interfaces/IReactiveSystem.h"
+#include "../Interfaces/ISystem.h"

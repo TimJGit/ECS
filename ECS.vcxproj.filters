@@ -30,20 +30,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Interfaces\IComponent.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Helpers\stdafx.h">
-      <Filter>Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="Helpers\Exceptions.h">
       <Filter>Helpers</Filter>
     </ClInclude>
     <ClInclude Include="Helpers\Vector3.h">
       <Filter>Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\ComponentIDs.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\PositionComponent.h">
       <Filter>Components</Filter>
@@ -103,6 +94,15 @@
       <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="Components\BuildingComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\stdafx.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IComponent.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ComponentIDs.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

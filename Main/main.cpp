@@ -1,4 +1,4 @@
-#include "../Helpers/stdafx.h"
+#include "stdafx.h"
 #include "../Components/Components.h"
 #include "../Entity/Entity.h"
 #include "../Group/Group.h"
