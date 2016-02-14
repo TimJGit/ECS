@@ -5,7 +5,7 @@
 
 Pool::Pool()
 {
-	m_IndexedGroups.resize(TOTAL_COMPONENTS);
+	m_IndexedGroups.resize(ComponentID::TOTAL_COMPONENTS);
 }
 
 Pool::~Pool()

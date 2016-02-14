@@ -3,7 +3,7 @@
 
 Entity::Entity()
 {
-	m_pComponents.resize(TOTAL_COMPONENTS);
+	m_pComponents.resize(ComponentID::TOTAL_COMPONENTS);
 }
 
 Entity::~Entity()

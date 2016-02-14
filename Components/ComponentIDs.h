@@ -5,12 +5,11 @@ enum ComponentID
 	Building,
 	Level,
 	Position,
-	Type
+	Type,
+	TOTAL_COMPONENTS // Do not move or remove
 };
 
-const int TOTAL_COMPONENTS = ComponentID::Type + 1;
-
-const char* const COMPONENT_NAMES[TOTAL_COMPONENTS] = {
+const char* const COMPONENT_NAMES[ComponentID::TOTAL_COMPONENTS] = {
 	"Building",
 	"Level",
 	"Position",
