@@ -26,14 +26,14 @@ void ReactiveSystem::Execute()
 		throw NullPointerException("ReactiveSystem::Execute >> ReactiveSystem is null!");
 	}
 
-	if(m_pCollectedEntites.size() == 0){
+	if(m_pCollectedEntities.size() == 0){
 		return;
 	}
 
-	vector<Entity*> collectedEntities(m_pCollectedEntites.begin(), m_pCollectedEntites.end());
+	vector<Entity*> collectedEntities(m_pCollectedEntities.begin(), m_pCollectedEntities.end());
 	m_pReactiveSystem->Execute(collectedEntities);
 
-	m_pCollectedEntites.clear();
+	m_pCollectedEntities.clear();
 }
 
 void ReactiveSystem::Notify(EntitySystemData* pData)
@@ -42,12 +42,16 @@ void ReactiveSystem::Notify(EntitySystemData* pData)
 		throw NullPointerException("ReactiveSystem::Notify >> Data is null!");
 	}
 
-	TriggerEvent triggerEvent = m_pReactiveSystem->GetTriggerEvent();
+	if(pData->GetEntityEvent() == EntityEvent::EntityDestroyed){
+		m_pCollectedEntities.erase(pData->GetEntity());
+		return;
+	}
 
+	TriggerEvent triggerEvent = m_pReactiveSystem->GetTriggerEvent();
 	if(triggerEvent == TriggerEvent::TriggerAdded && pData->GetEntityEvent() == EntityEvent::EntityAdded ||
 	   triggerEvent == TriggerEvent::TriggerRemoved && pData->GetEntityEvent() == EntityEvent::EntityRemoved ||
 	   triggerEvent == TriggerEvent::TriggerAddedOrRemoved){
-		m_pCollectedEntites.insert(pData->GetEntity());
+		m_pCollectedEntities.insert(pData->GetEntity());
 	}
 }
 

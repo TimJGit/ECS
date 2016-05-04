@@ -64,17 +64,18 @@ void Group::AddEntity(Entity* pEntity)
 	}
 }
 
-void Group::RemoveEntity(Entity* pEntity)
+void Group::RemoveEntity(Entity* pEntity, bool forceRemove)
 {
 	if(pEntity){
 		m_pEntities.erase(pEntity);
-		NotifyObservers(pEntity, EntityEvent::EntityRemoved);
+		NotifyObservers(pEntity, forceRemove ? EntityEvent::EntityDestroyed : EntityEvent::EntityRemoved);
 	}
 }
 
 inline void Group::NotifyObservers(Entity* pEntity, EntityEvent entityEvent) const
 {
 	EntitySystemData* pData = new EntitySystemData();
+
 	pData->SetEntity(pEntity);
 	pData->SetEntityEvent(entityEvent);
 

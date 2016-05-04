@@ -29,6 +29,17 @@ Entity* Pool::CreateEntity()
 	return pEntity;
 }
 
+void Pool::DestroyEntity(Entity* pEntity)
+{
+	for(IComponent* pComponent : pEntity->m_pComponents){
+		GroupList groupList = m_IndexedGroups[pComponent->GetComponentID()];
+		RemoveEntityFromGroups(pEntity, groupList, true);
+	}
+
+	m_pEntities.erase(pEntity);
+	delete pEntity;
+}
+
 Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 {
 	Group* pCachedGroup = GetCachedGroup(componentIDs);
@@ -42,7 +53,7 @@ Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 	m_pGroups.insert(pGroup);
 
 	UpdateIndexedGroups(pGroup);
-	AddEntitesToGroup(pGroup);
+	AddEntitiesToGroup(pGroup);
 	
 	return *pGroup;
 }
@@ -59,7 +70,7 @@ void Pool::Notify(EntityPoolData* pData)
 	if(componentEvent == ComponentEvent::ComponentAdded){
 		AddEntityToGroups(pData->GetEntity(), groupList);
 	}else if(componentEvent == ComponentEvent::ComponentRemoved){
-		RemoveEntityFromGroups(pData->GetEntity(), groupList);
+		RemoveEntityFromGroups(pData->GetEntity(), groupList, false);
 	}
 }
 
@@ -81,7 +92,7 @@ inline void Pool::UpdateIndexedGroups(Group* pGroup)
 	}
 }
 
-inline void Pool::AddEntitesToGroup(Group* pGroup) const
+inline void Pool::AddEntitiesToGroup(Group* pGroup) const
 {
 	for(Entity* pEntity : m_pEntities){
 		AddEntityToGroup(pEntity, pGroup);
@@ -106,9 +117,9 @@ inline void Pool::AddEntityToGroup(Entity* pEntity, Group* pGroup) const
 	pGroup->AddEntity(pEntity);
 }
 
-inline void Pool::RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList) const
+inline void Pool::RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList, bool forceRemove) const
 {
 	for(Group* pGroup : groupList){
-		pGroup->RemoveEntity(pEntity);
+		pGroup->RemoveEntity(pEntity, forceRemove);
 	}
 }

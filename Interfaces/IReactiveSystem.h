@@ -10,5 +10,5 @@ public:
 
 	virtual vector<ComponentID> GetTriggers() = 0;
 	virtual TriggerEvent GetTriggerEvent() = 0;
-	virtual void Execute(vector<Entity*> pEntites) = 0;
+	virtual void Execute(vector<Entity*> pEntities) = 0;
 };

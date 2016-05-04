@@ -17,7 +17,7 @@ public:
 private:
 	Pool* m_pPool;
 	IReactiveSystem* m_pReactiveSystem;
-	unordered_set<Entity*> m_pCollectedEntites;
+	unordered_set<Entity*> m_pCollectedEntities;
 
 	inline void SubscribeToGroup();
 	inline void UnsubscribeFromGroup();

@@ -14,6 +14,7 @@ public:
 	virtual ~Pool();
 
 	Entity* CreateEntity();
+	void DestroyEntity(Entity* pEntity);
 	Group& GetGroup(vector<ComponentID> componentIDs);
 
 	virtual void Notify(EntityPoolData* pData);
@@ -25,11 +26,11 @@ private:
 
 	inline Group* GetCachedGroup(vector<ComponentID>& componentIDs) const;
 	inline void UpdateIndexedGroups(Group* pGroup);
-	inline void AddEntitesToGroup(Group* pGroup) const;
+	inline void AddEntitiesToGroup(Group* pGroup) const;
 
 	inline void AddEntityToGroups(Entity* pEntity, const GroupList& groupList) const;
 	inline void AddEntityToGroup(Entity* pEntity, Group* pGroup) const;
-	inline void RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList) const;
+	inline void RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList, bool forceRemove) const;
 
 	Pool(const Pool&) = delete;
 	Pool& operator=(const Pool&) = delete;

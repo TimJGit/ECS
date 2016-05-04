@@ -41,6 +41,8 @@ public:
 			pEntity->AddComponent(new BuildingComponent());
 			pEntity->AddComponent(new TypeComponent("House"));
 			pEntity->AddComponent(new LevelComponent(i));
+
+			cout << "New entity created of type " << GetType(pEntity) << " and level " << GetLevel(pEntity) << endl;
 		}
 	}
 
@@ -55,12 +57,14 @@ public:
 	BuildingPositioningSystem() { }
 	virtual ~BuildingPositioningSystem() { }
 
-	virtual vector<ComponentID> GetTriggers() { return { ComponentID::Building, ComponentID::Type, ComponentID::Level }; };
-	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerAdded; };
-	virtual void Execute(vector<Entity*> pEntites)
+	virtual vector<ComponentID> GetTriggers() { return { ComponentID::Building, ComponentID::Type, ComponentID::Level }; }
+	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerAdded; }
+	virtual void Execute(vector<Entity*> pEntities)
 	{
-		for(Entity* pEntity : pEntites){
+		for(Entity* pEntity : pEntities){
 			pEntity->AddComponent(new PositionComponent(2.0f, 5.0f, 0.5f));
+
+			cout << "Entity of type " << GetType(pEntity) << " and level " << GetLevel(pEntity) << " received a position" << endl;
 		}
 	}
 
@@ -69,11 +73,56 @@ private:
 	BuildingPositioningSystem& operator=(const BuildingPositioningSystem&) = delete;
 };
 
+class BuildingDestructionSystem : public IReactiveSystem
+{
+public:
+	BuildingDestructionSystem() { }
+	virtual ~BuildingDestructionSystem() { }
+
+	virtual vector<ComponentID> GetTriggers() { return { ComponentID::Building, ComponentID::Position }; }
+	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerAdded; }
+	virtual void Execute(vector<Entity*> pEntities)
+	{
+		for(Entity* pEntity : pEntities){
+			if(GetLevel(pEntity) == 5){
+				Repo::Core()->DestroyEntity(pEntity);
+			}
+		}
+	}
+
+private:
+	BuildingDestructionSystem(const BuildingDestructionSystem&) = delete;
+	BuildingDestructionSystem& operator=(const BuildingDestructionSystem&) = delete;
+};
+
+class BuildingLogSystem : public IReactiveSystem
+{
+public:
+	BuildingLogSystem() { }
+	virtual ~BuildingLogSystem() { }
+
+	virtual vector<ComponentID> GetTriggers() { return { ComponentID::Building }; }
+	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerRemoved; }
+	virtual void Execute(vector<Entity*> pEntities)
+	{
+		vector<Entity*> pBuildings = Repo::Core()->GetGroup({ ComponentID::Building, ComponentID::Type, ComponentID::Level }).GetEntities();
+		for(Entity* pBuilding : pBuildings){
+			cout << "Building of type " << GetType(pBuilding) << " and level " << GetLevel(pBuilding) << endl;
+		}
+	}
+
+private:
+	BuildingLogSystem(const BuildingLogSystem&) = delete;
+	BuildingLogSystem& operator=(const BuildingLogSystem&) = delete;
+};
+
 void RunTest()
 {
 	RootSystem* pRootSystem = new RootSystem();
 	pRootSystem->AddSystem(new InitializeSystem(new BuildingSetupSystem()));
 	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingPositioningSystem()));
+	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingDestructionSystem()));
+	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingLogSystem()));
 
 	pRootSystem->Initialize();
 	while(true){
