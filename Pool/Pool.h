@@ -15,6 +15,7 @@ public:
 
 	Entity* CreateEntity();
 	void DestroyEntity(Entity* pEntity);
+	bool IsEntityValid(Entity* pEntity) const;
 	Group& GetGroup(vector<ComponentID> componentIDs);
 
 	virtual void Notify(EntityPoolData* pData);
@@ -30,7 +31,7 @@ private:
 
 	inline void AddEntityToGroups(Entity* pEntity, const GroupList& groupList) const;
 	inline void AddEntityToGroup(Entity* pEntity, Group* pGroup) const;
-	inline void RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList, bool forceRemove) const;
+	inline void RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList) const;
 
 	Pool(const Pool&) = delete;
 	Pool& operator=(const Pool&) = delete;

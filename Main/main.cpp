@@ -61,6 +61,7 @@ public:
 	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerAdded; }
 	virtual void Execute(vector<Entity*> pEntities)
 	{
+		cout << endl;
 		for(Entity* pEntity : pEntities){
 			pEntity->AddComponent(new PositionComponent(2.0f, 5.0f, 0.5f));
 
@@ -85,7 +86,7 @@ public:
 	{
 		for(Entity* pEntity : pEntities){
 			if(GetLevel(pEntity) == 5){
-				Repo::Core()->DestroyEntity(pEntity);
+				pEntity->RemoveComponent(ComponentID::Building);
 			}
 		}
 	}
@@ -105,15 +106,42 @@ public:
 	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerRemoved; }
 	virtual void Execute(vector<Entity*> pEntities)
 	{
-		vector<Entity*> pBuildings = Repo::Core()->GetGroup({ ComponentID::Building, ComponentID::Type, ComponentID::Level }).GetEntities();
-		for(Entity* pBuilding : pBuildings){
-			cout << "Building of type " << GetType(pBuilding) << " and level " << GetLevel(pBuilding) << endl;
+		cout << endl;
+		for(Entity* pBuilding : pEntities){
+			cout << "Building of type " << GetType(pBuilding) << " and level " << GetLevel(pBuilding) << " removed" << endl;
 		}
 	}
 
 private:
 	BuildingLogSystem(const BuildingLogSystem&) = delete;
 	BuildingLogSystem& operator=(const BuildingLogSystem&) = delete;
+};
+
+class BuildingCleanupSystem : public IReactiveSystem
+{
+public:
+	BuildingCleanupSystem() { }
+	virtual ~BuildingCleanupSystem() { }
+
+	virtual vector<ComponentID> GetTriggers() { return{ ComponentID::Building }; }
+	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerRemoved; }
+	virtual void Execute(vector<Entity*> pEntities)
+	{
+		cout << endl;
+
+		for(Entity* pEntity : pEntities){
+			Repo::Core()->DestroyEntity(pEntity);
+		}
+
+		vector<Entity*> pBuildings = Repo::Core()->GetGroup({ ComponentID::Building, ComponentID::Type, ComponentID::Level }).GetEntities();
+		for(Entity* pBuilding : pBuildings){
+			cout << "Building of type " << GetType(pBuilding) << " and level " << GetLevel(pBuilding) << " remaining" << endl;
+		}
+	}
+
+private:
+	BuildingCleanupSystem(const BuildingCleanupSystem&) = delete;
+	BuildingCleanupSystem& operator=(const BuildingCleanupSystem&) = delete;
 };
 
 void RunTest()
@@ -123,6 +151,7 @@ void RunTest()
 	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingPositioningSystem()));
 	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingDestructionSystem()));
 	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingLogSystem()));
+	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingCleanupSystem()));
 
 	pRootSystem->Initialize();
 	while(true){
@@ -131,6 +160,7 @@ void RunTest()
 			break;
 		}
 	}
+
 	delete pRootSystem;
 	delete Repo::Core();
 }

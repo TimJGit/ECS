@@ -24,7 +24,7 @@ private:
 	bool CompareComponentIDs(vector<ComponentID>& componentIDs) const;
 
 	void AddEntity(Entity* pEntity);
-	void RemoveEntity(Entity* pEntity, bool forceRemove);
+	void RemoveEntity(Entity* pEntity);
 
 	inline void NotifyObservers(Entity* pEntity, EntityEvent entityEvent) const;
 

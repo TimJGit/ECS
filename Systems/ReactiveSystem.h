@@ -22,6 +22,8 @@ private:
 	inline void SubscribeToGroup();
 	inline void UnsubscribeFromGroup();
 
+	inline void CleanupCollectedEntities();
+
 	ReactiveSystem(const ReactiveSystem&) = delete;
 	ReactiveSystem& operator=(const ReactiveSystem&) = delete;
 };

@@ -26,6 +26,7 @@ void ReactiveSystem::Execute()
 		throw NullPointerException("ReactiveSystem::Execute >> ReactiveSystem is null!");
 	}
 
+	CleanupCollectedEntities();
 	if(m_pCollectedEntities.size() == 0){
 		return;
 	}
@@ -40,11 +41,6 @@ void ReactiveSystem::Notify(EntitySystemData* pData)
 {
 	if(!pData){
 		throw NullPointerException("ReactiveSystem::Notify >> Data is null!");
-	}
-
-	if(pData->GetEntityEvent() == EntityEvent::EntityDestroyed){
-		m_pCollectedEntities.erase(pData->GetEntity());
-		return;
 	}
 
 	TriggerEvent triggerEvent = m_pReactiveSystem->GetTriggerEvent();
@@ -66,5 +62,21 @@ inline void ReactiveSystem::UnsubscribeFromGroup()
 {
 	if(m_pPool && m_pReactiveSystem){
 		m_pPool->GetGroup(m_pReactiveSystem->GetTriggers()).RemoveObserver(this);
+	}
+}
+
+inline void ReactiveSystem::CleanupCollectedEntities()
+{
+	vector<Entity*> pEntitiesToRemove;
+	pEntitiesToRemove.reserve(m_pCollectedEntities.size());
+
+	for(Entity* pEntity : m_pCollectedEntities){
+		if(!m_pPool->IsEntityValid(pEntity)){
+			pEntitiesToRemove.push_back(pEntity);
+		}
+	}
+
+	for(Entity* pEntity : pEntitiesToRemove){
+		m_pCollectedEntities.erase(pEntity);
 	}
 }

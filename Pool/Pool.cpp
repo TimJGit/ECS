@@ -32,12 +32,19 @@ Entity* Pool::CreateEntity()
 void Pool::DestroyEntity(Entity* pEntity)
 {
 	for(IComponent* pComponent : pEntity->m_pComponents){
-		GroupList groupList = m_IndexedGroups[pComponent->GetComponentID()];
-		RemoveEntityFromGroups(pEntity, groupList, true);
+		if(pComponent){
+			GroupList groupList = m_IndexedGroups[pComponent->GetComponentID()];
+			RemoveEntityFromGroups(pEntity, groupList);
+		}
 	}
 
 	m_pEntities.erase(pEntity);
 	delete pEntity;
+}
+
+bool Pool::IsEntityValid(Entity* pEntity) const
+{
+	return pEntity->m_pComponents.size() == ComponentID::TOTAL_COMPONENTS && pEntity->m_pObserver != nullptr;
 }
 
 Group& Pool::GetGroup(vector<ComponentID> componentIDs)
@@ -70,7 +77,7 @@ void Pool::Notify(EntityPoolData* pData)
 	if(componentEvent == ComponentEvent::ComponentAdded){
 		AddEntityToGroups(pData->GetEntity(), groupList);
 	}else if(componentEvent == ComponentEvent::ComponentRemoved){
-		RemoveEntityFromGroups(pData->GetEntity(), groupList, false);
+		RemoveEntityFromGroups(pData->GetEntity(), groupList);
 	}
 }
 
@@ -117,9 +124,9 @@ inline void Pool::AddEntityToGroup(Entity* pEntity, Group* pGroup) const
 	pGroup->AddEntity(pEntity);
 }
 
-inline void Pool::RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList, bool forceRemove) const
+inline void Pool::RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList) const
 {
 	for(Group* pGroup : groupList){
-		pGroup->RemoveEntity(pEntity, forceRemove);
+		pGroup->RemoveEntity(pEntity);
 	}
 }

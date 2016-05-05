@@ -64,11 +64,11 @@ void Group::AddEntity(Entity* pEntity)
 	}
 }
 
-void Group::RemoveEntity(Entity* pEntity, bool forceRemove)
+void Group::RemoveEntity(Entity* pEntity)
 {
 	if(pEntity){
 		m_pEntities.erase(pEntity);
-		NotifyObservers(pEntity, forceRemove ? EntityEvent::EntityDestroyed : EntityEvent::EntityRemoved);
+		NotifyObservers(pEntity, EntityEvent::EntityRemoved);
 	}
 }
 
