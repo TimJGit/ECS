@@ -28,6 +28,9 @@
     <ClCompile Include="Systems\ExecuteSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Helpers\Timer.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Helpers\Exceptions.h">
@@ -104,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="Components\ComponentIDs.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Timer.h">
+      <Filter>Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
