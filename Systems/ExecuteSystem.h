@@ -11,7 +11,4 @@ public:
 
 private:
 	IExecuteSystem* m_pExecuteSystem;
-
-	ExecuteSystem(const ExecuteSystem&) = delete;
-	ExecuteSystem& operator=(const ExecuteSystem&) = delete;
 };

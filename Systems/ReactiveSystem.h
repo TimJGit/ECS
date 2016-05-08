@@ -2,7 +2,6 @@
 #include "../Main/stdafx.h"
 
 class Entity;
-class EntitySystemData;
 class Pool;
 
 class ReactiveSystem : public ISystem, public INotifiableSystem
@@ -12,7 +11,7 @@ public:
 	virtual ~ReactiveSystem();
 
 	virtual void Execute();
-	virtual void Notify(EntitySystemData* pData);
+	virtual void Notify(Entity* pEntity, EntityEvent entityEvent);
 
 private:
 	Pool* m_pPool;
@@ -23,7 +22,4 @@ private:
 	inline void UnsubscribeFromGroup();
 
 	inline void CleanupCollectedEntities();
-
-	ReactiveSystem(const ReactiveSystem&) = delete;
-	ReactiveSystem& operator=(const ReactiveSystem&) = delete;
 };

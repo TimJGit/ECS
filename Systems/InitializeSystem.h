@@ -11,7 +11,4 @@ public:
 
 private:
 	IInitializeSystem* m_pInitializeSystem;
-
-	InitializeSystem(const InitializeSystem&) = delete;
-	InitializeSystem& operator=(const InitializeSystem&) = delete;
 };

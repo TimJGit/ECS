@@ -13,16 +13,10 @@ public:
 	IComponent* GetComponent(ComponentID componentID) const;
 
 private:
-	Entity();
+	Entity(INotifiablePool* pObserver);
 
-	vector<IComponent*> m_pComponents;
 	INotifiablePool* m_pObserver;
-
-	void SetObserver(INotifiablePool* pObserver);
-	inline void NotifyObserver(ComponentID componentID, ComponentEvent componentEvent);
+	vector<IComponent*> m_pComponents;
 
 	friend class Pool;
-
-	Entity(const Entity&) = delete;
-	Entity& operator=(const Entity&) = delete;
 };

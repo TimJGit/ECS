@@ -1,5 +1,4 @@
 #include "Group.h"
-#include "../Entity/EntityData.h"
 
 Group::Group()
 {
@@ -17,15 +16,15 @@ vector<Entity*> Group::GetEntities() const
 void Group::AddObserver(INotifiableSystem* pObserver)
 {
 	if(!pObserver){
-		throw NullPointerException("Group::AddObserver >> Observer is null!");
+		throw NullPointerException("Group::AddObserver", "Observer is null");
 	}
 
-	m_pObservers.insert(pObserver);
+	m_pObservers.push_back(pObserver);
 }
 
 void Group::RemoveObserver(INotifiableSystem* pObserver)
 {
-	m_pObservers.erase(pObserver);
+	m_pObservers.erase(remove(m_pObservers.begin(), m_pObservers.end(), pObserver), m_pObservers.end());
 }
 
 void Group::SetComponentIDs(const vector<ComponentID>& componentIDs)
@@ -39,49 +38,28 @@ const vector<ComponentID>& Group::GetComponentIDs() const
 	return m_ComponentIDs;
 }
 
-bool Group::CompareComponentIDs(vector<ComponentID>& componentIDs) const
-{
-	if(m_ComponentIDs.size() != componentIDs.size()){
-		return false;
-	}
-
-	sort(componentIDs.begin(), componentIDs.end());
-
-	for(unsigned int i = 0; i < m_ComponentIDs.size(); ++i){
-		if(m_ComponentIDs[i] != componentIDs[i]){
-			return false;
-		}
-	}
-
-	return true;
-}
-
 void Group::AddEntity(Entity* pEntity)
 {
-	if(pEntity){
-		m_pEntities.insert(pEntity);
-		NotifyObservers(pEntity, EntityEvent::EntityAdded);
+	if(!pEntity){
+		throw NullPointerException("Group::AddEntity", "Entity is null");
+	}
+
+	m_pEntities.insert(pEntity);
+
+	for(INotifiableSystem* pObserver : m_pObservers){
+		pObserver->Notify(pEntity, EntityEvent::EntityAdded);
 	}
 }
 
 void Group::RemoveEntity(Entity* pEntity)
 {
-	if(pEntity){
-		m_pEntities.erase(pEntity);
-		NotifyObservers(pEntity, EntityEvent::EntityRemoved);
+	if(!pEntity){
+		throw NullPointerException("Group::RemoveEntity", "Entity is null");
 	}
-}
 
-inline void Group::NotifyObservers(Entity* pEntity, EntityEvent entityEvent) const
-{
-	EntitySystemData* pData = new EntitySystemData();
-
-	pData->SetEntity(pEntity);
-	pData->SetEntityEvent(entityEvent);
+	m_pEntities.erase(pEntity);
 
 	for(INotifiableSystem* pObserver : m_pObservers){
-		pObserver->Notify(pData);
+		pObserver->Notify(pEntity, EntityEvent::EntityRemoved);
 	}
-
-	delete pData;
 }

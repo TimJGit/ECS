@@ -19,6 +19,7 @@ using namespace std;
 #include "../Components/ComponentIDs.h"
 #include "../Helpers/Enums.h"
 #include "../Helpers/Exceptions.h"
+#include "../Helpers/Timer.h"
 #include "../Helpers/Vector3.h"
 #include "../Interfaces/IComponent.h"
 #include "../Interfaces/IExecuteSystem.h"

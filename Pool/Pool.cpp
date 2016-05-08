@@ -1,6 +1,5 @@
 #include "Pool.h"
 #include "../Entity/Entity.h"
-#include "../Entity/EntityData.h"
 #include "../Group/Group.h"
 
 Pool::Pool()
@@ -21,11 +20,8 @@ Pool::~Pool()
 
 Entity* Pool::CreateEntity()
 {
-	Entity* pEntity = new Entity();
-
-	pEntity->SetObserver(this);
+	Entity* pEntity = new Entity(this);
 	m_pEntities.insert(pEntity);
-
 	return pEntity;
 }
 
@@ -57,7 +53,7 @@ Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 	Group* pGroup = new Group();
 
 	pGroup->SetComponentIDs(componentIDs);
-	m_pGroups.insert(pGroup);
+	m_pGroups.push_back(pGroup);
 
 	UpdateIndexedGroups(pGroup);
 	AddEntitiesToGroup(pGroup);
@@ -65,31 +61,46 @@ Group& Pool::GetGroup(vector<ComponentID> componentIDs)
 	return *pGroup;
 }
 
-void Pool::Notify(EntityPoolData* pData)
+void Pool::Notify(Entity* pEntity, ComponentID componentID, ComponentEvent componentEvent)
 {
-	if(!pData){
-		throw NullPointerException("Pool::Notify >> Data is null!");
+	if(!pEntity){
+		throw NullPointerException("Pool::Notify", "Entity is null");
 	}
 
-	GroupList groupList = m_IndexedGroups[pData->GetComponentID()];
-
-	ComponentEvent componentEvent = pData->GetComponentEvent();
+	GroupList groupList = m_IndexedGroups[componentID];
 	if(componentEvent == ComponentEvent::ComponentAdded){
-		AddEntityToGroups(pData->GetEntity(), groupList);
+		AddEntityToGroups(pEntity, groupList);
 	}else if(componentEvent == ComponentEvent::ComponentRemoved){
-		RemoveEntityFromGroups(pData->GetEntity(), groupList);
+		RemoveEntityFromGroups(pEntity, groupList);
 	}
 }
 
 inline Group* Pool::GetCachedGroup(vector<ComponentID>& componentIDs) const
 {
 	for(Group* pGroup : m_pGroups){
-		if(pGroup->CompareComponentIDs(componentIDs)){
+		if(CompareGroupComponentIDs(pGroup->GetComponentIDs(), componentIDs)){
 			return pGroup;
 		}
 	}
 
 	return nullptr;
+}
+
+inline bool Pool::CompareGroupComponentIDs(const vector<ComponentID>& componentIDs1, vector<ComponentID>& componentIDs2) const
+{
+	if(componentIDs1.size() != componentIDs2.size()){
+		return false;
+	}
+
+	sort(componentIDs2.begin(), componentIDs2.end());
+
+	for(unsigned int i = 0; i < componentIDs1.size(); ++i){
+		if(componentIDs1[i] != componentIDs2[i]){
+			return false;
+		}
+	}
+
+	return true;
 }
 
 inline void Pool::UpdateIndexedGroups(Group* pGroup)

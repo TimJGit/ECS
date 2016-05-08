@@ -2,7 +2,6 @@
 #include "../Main/stdafx.h"
 
 class Entity;
-class EntityPoolData;
 class Group;
 
 typedef vector<Group*> GroupList;
@@ -18,21 +17,19 @@ public:
 	bool IsEntityValid(Entity* pEntity) const;
 	Group& GetGroup(vector<ComponentID> componentIDs);
 
-	virtual void Notify(EntityPoolData* pData);
+	virtual void Notify(Entity* pEntity, ComponentID componentID, ComponentEvent componentEvent);
 
 private:
 	unordered_set<Entity*> m_pEntities;
-	unordered_set<Group*> m_pGroups;
+	vector<Group*> m_pGroups;
 	vector<GroupList> m_IndexedGroups;
 
 	inline Group* GetCachedGroup(vector<ComponentID>& componentIDs) const;
+	inline bool CompareGroupComponentIDs(const vector<ComponentID>& componentIDs1, vector<ComponentID>& componentIDs2) const;
 	inline void UpdateIndexedGroups(Group* pGroup);
 	inline void AddEntitiesToGroup(Group* pGroup) const;
 
 	inline void AddEntityToGroups(Entity* pEntity, const GroupList& groupList) const;
 	inline void AddEntityToGroup(Entity* pEntity, Group* pGroup) const;
 	inline void RemoveEntityFromGroups(Entity* pEntity, const GroupList& groupList) const;
-
-	Pool(const Pool&) = delete;
-	Pool& operator=(const Pool&) = delete;
 };

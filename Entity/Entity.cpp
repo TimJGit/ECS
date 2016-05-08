@@ -1,8 +1,8 @@
 #include "Entity.h"
-#include "EntityData.h"
 
-Entity::Entity()
+Entity::Entity(INotifiablePool* pObserver)
 {
+	m_pObserver = pObserver;
 	m_pComponents.resize(ComponentID::TOTAL_COMPONENTS);
 }
 
@@ -21,34 +21,27 @@ bool Entity::HasComponent(ComponentID componentID) const
 void Entity::AddComponent(IComponent* pComponent)
 {
 	if(!pComponent){
-		throw NullPointerException("Entity::AddComponent >> Component is null!");
+		throw NullPointerException("Entity::AddComponent", "Component is null");
 	}
 
 	ComponentID componentID = pComponent->GetComponentID();
-
 	if(HasComponent(componentID)){
-		stringstream buffer;
-		buffer << "Entity::AddComponent >> Entity already has component \'" << COMPONENT_NAMES[componentID] << "\'!";
-		throw EntityAlreadyHasComponentException(buffer.str().c_str());
+		throw EntityAlreadyHasComponentException("Entity::AddComponent", COMPONENT_NAMES[componentID]);
 	}
 
 	m_pComponents[componentID] = pComponent;
-
-	NotifyObserver(componentID, ComponentEvent::ComponentAdded);
+	m_pObserver->Notify(this, componentID, ComponentEvent::ComponentAdded);
 }
 
 void Entity::RemoveComponent(ComponentID componentID)
 {
 	if(!HasComponent(componentID)){
-		stringstream buffer;
-		buffer << "Entity::RemoveComponent >> Entity does not have component \'" << COMPONENT_NAMES[componentID] << "\'!";
-		throw EntityDoesNotHaveComponentException(buffer.str().c_str());
+		throw EntityDoesNotHaveComponentException("Entity::RemoveComponent", COMPONENT_NAMES[componentID]);
 	}
 
 	delete m_pComponents[componentID];
 	m_pComponents[componentID] = nullptr;
-
-	NotifyObserver(componentID, ComponentEvent::ComponentRemoved);
+	m_pObserver->Notify(this, componentID, ComponentEvent::ComponentRemoved);
 }
 
 void Entity::ReplaceComponent(IComponent* pComponent)
@@ -60,28 +53,8 @@ void Entity::ReplaceComponent(IComponent* pComponent)
 IComponent* Entity::GetComponent(ComponentID componentID) const
 {
 	if(!HasComponent(componentID)){
-		stringstream buffer;
-		buffer << "Entity::GetComponent >> Entity does not have component \'" << COMPONENT_NAMES[componentID] << "\'!";
-		throw EntityDoesNotHaveComponentException(buffer.str().c_str());
+		throw EntityDoesNotHaveComponentException("Entity::GetComponent", COMPONENT_NAMES[componentID]);
 	}
 
 	return m_pComponents[componentID];
-}
-
-void Entity::SetObserver(INotifiablePool* pObserver)
-{
-	m_pObserver = pObserver;
-}
-
-inline void Entity::NotifyObserver(ComponentID componentID, ComponentEvent componentEvent)
-{
-	EntityPoolData* pData = new EntityPoolData();
-	
-	pData->SetEntity(this);
-	pData->SetComponentID(componentID);
-	pData->SetComponentEvent(componentEvent);
-
-	m_pObserver->Notify(pData);
-
-	delete pData;
 }

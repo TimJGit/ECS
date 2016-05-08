@@ -1,5 +1,4 @@
 #include "ReactiveSystem.h"
-#include "../Entity/EntityData.h"
 #include "../Group/Group.h"
 #include "../Pool/Pool.h"
 
@@ -19,11 +18,11 @@ ReactiveSystem::~ReactiveSystem()
 void ReactiveSystem::Execute()
 {
 	if(!m_pPool){
-		throw NullPointerException("ReactiveSystem::Execute >> Pool is null!");
+		throw NullPointerException("ReactiveSystem::Execute", "Pool is null");
 	}
 
 	if(!m_pReactiveSystem){
-		throw NullPointerException("ReactiveSystem::Execute >> ReactiveSystem is null!");
+		throw NullPointerException("ReactiveSystem::Execute", "ReactiveSystem is null");
 	}
 
 	CleanupCollectedEntities();
@@ -31,23 +30,23 @@ void ReactiveSystem::Execute()
 		return;
 	}
 
-	vector<Entity*> collectedEntities(m_pCollectedEntities.begin(), m_pCollectedEntities.end());
-	m_pReactiveSystem->Execute(collectedEntities);
+	vector<Entity*> pCollectedEntities(m_pCollectedEntities.begin(), m_pCollectedEntities.end());
+	m_pReactiveSystem->Execute(pCollectedEntities);
 
 	m_pCollectedEntities.clear();
 }
 
-void ReactiveSystem::Notify(EntitySystemData* pData)
+void ReactiveSystem::Notify(Entity* pEntity, EntityEvent entityEvent)
 {
-	if(!pData){
-		throw NullPointerException("ReactiveSystem::Notify >> Data is null!");
+	if(!pEntity){
+		throw NullPointerException("ReactiveSystem::Notify", "Entity is null");
 	}
 
 	TriggerEvent triggerEvent = m_pReactiveSystem->GetTriggerEvent();
-	if(triggerEvent == TriggerEvent::TriggerAdded && pData->GetEntityEvent() == EntityEvent::EntityAdded ||
-	   triggerEvent == TriggerEvent::TriggerRemoved && pData->GetEntityEvent() == EntityEvent::EntityRemoved ||
+	if(triggerEvent == TriggerEvent::TriggerAdded && entityEvent == EntityEvent::EntityAdded ||
+	   triggerEvent == TriggerEvent::TriggerRemoved && entityEvent == EntityEvent::EntityRemoved ||
 	   triggerEvent == TriggerEvent::TriggerAddedOrRemoved){
-		m_pCollectedEntities.insert(pData->GetEntity());
+		m_pCollectedEntities.insert(pEntity);
 	}
 }
 

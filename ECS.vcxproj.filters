@@ -54,9 +54,6 @@
     <ClInclude Include="Interfaces\INotifiable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\EntityData.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Components\TypeComponent.h">
       <Filter>Components</Filter>
     </ClInclude>

@@ -1,14 +1,10 @@
 #pragma once
 
-class BuildingComponent : public IComponent
+class BuildingComponent final : public IComponent
 {
 public:
-	BuildingComponent() { }
-	virtual ~BuildingComponent() { }
+	BuildingComponent() {}
+	~BuildingComponent() {}
 
 	virtual ComponentID GetComponentID() const { return ComponentID::Building; }
-
-private:
-	BuildingComponent(const BuildingComponent&) = delete;
-	BuildingComponent& operator=(const BuildingComponent&) = delete;
 };

@@ -13,7 +13,7 @@ ExecuteSystem::~ExecuteSystem()
 void ExecuteSystem::Execute()
 {
 	if(!m_pExecuteSystem){
-		throw NullPointerException("ExecuteSystem::Execute >> ExecuteSystem is null!");
+		throw NullPointerException("ExecuteSystem::Execute", "ExecuteSystem is null");
 	}
 
 	m_pExecuteSystem->Execute();

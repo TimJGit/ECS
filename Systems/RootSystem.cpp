@@ -38,7 +38,7 @@ void RootSystem::AddSystem(ISystem* pSystem)
 		return;
 	}
 
-	throw UnknownSystemTypeException("RootSystem::AddSystem >> System has an unknown type!");
+	throw UnknownSystemTypeException("RootSystem::AddSystem");
 }
 
 void RootSystem::Initialize()

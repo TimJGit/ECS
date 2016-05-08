@@ -1,14 +1,13 @@
 #pragma once
 
-class EntityPoolData;
-class EntitySystemData;
+class Entity;
 
 class INotifiablePool
 {
 public:
 	virtual ~INotifiablePool() { }
 
-	virtual void Notify(EntityPoolData* pData) = 0;
+	virtual void Notify(Entity* pEntity, ComponentID componentID, ComponentEvent componentEvent) = 0;
 };
 
 class INotifiableSystem
@@ -16,5 +15,5 @@ class INotifiableSystem
 public:
 	virtual ~INotifiableSystem() { }
 
-	virtual void Notify(EntitySystemData* pData) = 0;
+	virtual void Notify(Entity* pEntity, EntityEvent entityEvent) = 0;
 };

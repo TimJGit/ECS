@@ -8,7 +8,7 @@
 class Repo
 {
 public:
-	virtual ~Repo() { }
+	virtual ~Repo() {}
 
 	static Pool* Core()
 	{
@@ -19,20 +19,17 @@ public:
 	}
 
 private:
-	Repo() { }
+	Repo() {}
 
 	static Pool* m_pCorePool;
-
-	Repo(const Repo&) = delete;
-	Repo& operator=(const Repo&) = delete;
 };
 Pool* Repo::m_pCorePool = nullptr;
 
 class BuildingSetupSystem : public IInitializeSystem
 {
 public:
-	BuildingSetupSystem() { }
-	virtual ~BuildingSetupSystem() { }
+	BuildingSetupSystem() {}
+	virtual ~BuildingSetupSystem() {}
 
 	virtual void Initialize()
 	{
@@ -45,17 +42,13 @@ public:
 			cout << "New entity created of type " << GetType(pEntity) << " and level " << GetLevel(pEntity) << endl;
 		}
 	}
-
-private:
-	BuildingSetupSystem(const BuildingSetupSystem&) = delete;
-	BuildingSetupSystem& operator=(const BuildingSetupSystem&) = delete;
 };
 
 class BuildingPositioningSystem : public IReactiveSystem
 {
 public:
-	BuildingPositioningSystem() { }
-	virtual ~BuildingPositioningSystem() { }
+	BuildingPositioningSystem() {}
+	virtual ~BuildingPositioningSystem() {}
 
 	virtual vector<ComponentID> GetTriggers() { return { ComponentID::Building, ComponentID::Type, ComponentID::Level }; }
 	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerAdded; }
@@ -68,67 +61,40 @@ public:
 			cout << "Entity of type " << GetType(pEntity) << " and level " << GetLevel(pEntity) << " received a position" << endl;
 		}
 	}
-
-private:
-	BuildingPositioningSystem(const BuildingPositioningSystem&) = delete;
-	BuildingPositioningSystem& operator=(const BuildingPositioningSystem&) = delete;
 };
 
 class BuildingDestructionSystem : public IReactiveSystem
 {
 public:
-	BuildingDestructionSystem() { }
-	virtual ~BuildingDestructionSystem() { }
+	BuildingDestructionSystem() {}
+	virtual ~BuildingDestructionSystem() {}
 
 	virtual vector<ComponentID> GetTriggers() { return { ComponentID::Building, ComponentID::Position }; }
 	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerAdded; }
 	virtual void Execute(vector<Entity*> pEntities)
 	{
+		cout << endl;
 		for(Entity* pEntity : pEntities){
 			if(GetLevel(pEntity) == 5){
 				pEntity->RemoveComponent(ComponentID::Building);
+
+				cout << "Building of type " << GetType(pEntity) << " and level " << GetLevel(pEntity) << " removed" << endl;
 			}
 		}
 	}
-
-private:
-	BuildingDestructionSystem(const BuildingDestructionSystem&) = delete;
-	BuildingDestructionSystem& operator=(const BuildingDestructionSystem&) = delete;
-};
-
-class BuildingLogSystem : public IReactiveSystem
-{
-public:
-	BuildingLogSystem() { }
-	virtual ~BuildingLogSystem() { }
-
-	virtual vector<ComponentID> GetTriggers() { return { ComponentID::Building }; }
-	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerRemoved; }
-	virtual void Execute(vector<Entity*> pEntities)
-	{
-		cout << endl;
-		for(Entity* pBuilding : pEntities){
-			cout << "Building of type " << GetType(pBuilding) << " and level " << GetLevel(pBuilding) << " removed" << endl;
-		}
-	}
-
-private:
-	BuildingLogSystem(const BuildingLogSystem&) = delete;
-	BuildingLogSystem& operator=(const BuildingLogSystem&) = delete;
 };
 
 class BuildingCleanupSystem : public IReactiveSystem
 {
 public:
-	BuildingCleanupSystem() { }
-	virtual ~BuildingCleanupSystem() { }
+	BuildingCleanupSystem() {}
+	virtual ~BuildingCleanupSystem() {}
 
 	virtual vector<ComponentID> GetTriggers() { return{ ComponentID::Building }; }
 	virtual TriggerEvent GetTriggerEvent() { return TriggerEvent::TriggerRemoved; }
 	virtual void Execute(vector<Entity*> pEntities)
 	{
 		cout << endl;
-
 		for(Entity* pEntity : pEntities){
 			Repo::Core()->DestroyEntity(pEntity);
 		}
@@ -138,10 +104,6 @@ public:
 			cout << "Building of type " << GetType(pBuilding) << " and level " << GetLevel(pBuilding) << " remaining" << endl;
 		}
 	}
-
-private:
-	BuildingCleanupSystem(const BuildingCleanupSystem&) = delete;
-	BuildingCleanupSystem& operator=(const BuildingCleanupSystem&) = delete;
 };
 
 void RunTest()
@@ -150,7 +112,6 @@ void RunTest()
 	pRootSystem->AddSystem(new InitializeSystem(new BuildingSetupSystem()));
 	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingPositioningSystem()));
 	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingDestructionSystem()));
-	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingLogSystem()));
 	pRootSystem->AddSystem(new ReactiveSystem(Repo::Core(), new BuildingCleanupSystem()));
 
 	pRootSystem->Initialize();

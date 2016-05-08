@@ -18,7 +18,4 @@ public:
 private:
 	vector<ISystem*> m_pInitializeSystems;
 	vector<ISystem*> m_pExecuteSystems;
-
-	RootSystem(const RootSystem&) = delete;
-	RootSystem& operator=(const RootSystem&) = delete;
 };

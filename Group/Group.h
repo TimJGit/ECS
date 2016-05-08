@@ -17,19 +17,13 @@ private:
 
 	vector<ComponentID> m_ComponentIDs;
 	unordered_set<Entity*> m_pEntities;
-	unordered_set<INotifiableSystem*> m_pObservers;
+	vector<INotifiableSystem*> m_pObservers;
 
 	void SetComponentIDs(const vector<ComponentID>& componentIDs);
 	const vector<ComponentID>& GetComponentIDs() const;
-	bool CompareComponentIDs(vector<ComponentID>& componentIDs) const;
 
 	void AddEntity(Entity* pEntity);
 	void RemoveEntity(Entity* pEntity);
 
-	inline void NotifyObservers(Entity* pEntity, EntityEvent entityEvent) const;
-
 	friend class Pool;
-
-	Group(const Group&) = delete;
-	Group& operator=(const Group&) = delete;
 };
